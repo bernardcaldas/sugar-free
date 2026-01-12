@@ -105,6 +105,21 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
     }
 
     // Not logged yet
+    const [confirmState, setConfirmState] = useState<'yes' | 'no' | null>(null)
+
+    const handleConfirmStep = (type: 'yes' | 'no') => {
+        if (confirmState === type) {
+            // Second tap - Confirm
+            handleMark(type === 'yes')
+            setConfirmState(null)
+        } else {
+            // First tap - Wait for config
+            setConfirmState(type)
+            // Auto reset after 3 seconds
+            setTimeout(() => setConfirmState(null), 3000)
+        }
+    }
+
     return (
         <Card>
             <CardHeader>
@@ -113,20 +128,36 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
             <CardContent className="flex flex-col sm:flex-row justify-center gap-4 pb-8">
                 <Button
                     size="lg"
-                    className="bg-green-600 hover:bg-green-700 h-16 w-full sm:w-32 text-lg"
-                    onClick={() => handleMark(true)}
-                    disabled={loading}
+                    className={cn(
+                        "h-16 w-full sm:w-32 text-lg transition-all duration-200",
+                        confirmState === 'yes' ? "bg-green-700 ring-2 ring-green-400 ring-offset-2 scale-105" : "bg-green-600 hover:bg-green-700"
+                    )}
+                    onClick={() => handleConfirmStep('yes')}
+                    disabled={loading || (confirmState === 'no')}
                 >
-                    Yes!
+                    {confirmState === 'yes' ? (
+                        <span className="text-xs flex flex-col items-center leading-tight">
+                            <span>Tap again</span>
+                            <span>to confirm</span>
+                        </span>
+                    ) : "Yes!"}
                 </Button>
                 <Button
                     size="lg"
                     variant="destructive"
-                    className="h-16 w-full sm:w-32 text-lg"
-                    onClick={() => handleMark(false)}
-                    disabled={loading}
+                    className={cn(
+                        "h-16 w-full sm:w-32 text-lg transition-all duration-200",
+                        confirmState === 'no' ? "bg-red-700 ring-2 ring-red-400 ring-offset-2 scale-105" : ""
+                    )}
+                    onClick={() => handleConfirmStep('no')}
+                    disabled={loading || (confirmState === 'yes')}
                 >
-                    No
+                    {confirmState === 'no' ? (
+                        <span className="text-xs flex flex-col items-center leading-tight">
+                            <span>Tap again</span>
+                            <span>to confirm</span>
+                        </span>
+                    ) : "No"}
                 </Button>
             </CardContent>
         </Card>

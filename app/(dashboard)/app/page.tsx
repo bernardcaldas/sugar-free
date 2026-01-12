@@ -7,6 +7,7 @@ import { StatsCard } from '@/components/StatsCard'
 import { Calendar } from '@/components/Calendar'
 import { Timeline } from '@/components/Timeline'
 import { NextReward } from '@/components/NextReward'
+import { Motivation } from '@/components/Motivation'
 import { calculateStreak, calculateMonthStats } from '@/lib/utils'
 import { useState, useEffect, useMemo } from 'react'
 import { format, isSameDay, getDaysInMonth } from 'date-fns'
@@ -62,7 +63,9 @@ export default function DashboardPage() {
                         <ActionCard
                             log={todayLog}
                             onMark={(s, n) => handleMark(today, s, n)}
+                            isFuture={false}
                         />
+                        <Motivation streakActive={streak > 0} />
                     </section>
 
                     {/* Stats */}
