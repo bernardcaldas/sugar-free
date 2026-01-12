@@ -1,0 +1,29 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Flame, CheckCircle } from 'lucide-react'
+
+export function StatsCard({ streak, percentage }: { streak: number, percentage: number }) {
+    return (
+        <div className="grid gap-4 md:grid-cols-2">
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Current Streak</CardTitle>
+                    <Flame className="h-4 w-4 text-orange-500" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">{streak} days</div>
+                    <p className="text-xs text-muted-foreground">Keep the fire burning!</p>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Month Success</CardTitle>
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">{percentage}%</div>
+                    <p className="text-xs text-muted-foreground">Sugar-free days this month</p>
+                </CardContent>
+            </Card>
+        </div>
+    )
+}
