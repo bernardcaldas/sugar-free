@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { DailyLog } from '@/types'
+import { cn } from '@/lib/utils'
 
 import { CalendarOff } from 'lucide-react'
 
@@ -66,10 +67,10 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                                 <DialogTitle>Edit Day</DialogTitle>
                             </DialogHeader>
                             <div className="space-y-4 py-4">
-                                <div className="flex gap-4 justify-center">
+                                <div className="grid grid-cols-2 gap-4 w-full">
                                     <Button
                                         variant={log.success ? "default" : "outline"}
-                                        className={log.success ? "bg-green-600 hover:bg-green-700" : ""}
+                                        className={cn("w-full", log.success ? "bg-green-600 hover:bg-green-700" : "")}
                                         onClick={() => handleMark(true)}
                                         disabled={loading}
                                     >
@@ -77,6 +78,7 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                                     </Button>
                                     <Button
                                         variant={!log.success ? "destructive" : "outline"}
+                                        className="w-full"
                                         onClick={() => handleMark(false)}
                                         disabled={loading}
                                     >
@@ -108,10 +110,10 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
             <CardHeader>
                 <CardTitle className="text-center">Did you stay sugar-free today?</CardTitle>
             </CardHeader>
-            <CardContent className="flex justify-center gap-6 pb-8">
+            <CardContent className="flex flex-col sm:flex-row justify-center gap-4 pb-8">
                 <Button
                     size="lg"
-                    className="bg-green-600 hover:bg-green-700 h-16 w-32 text-lg"
+                    className="bg-green-600 hover:bg-green-700 h-16 w-full sm:w-32 text-lg"
                     onClick={() => handleMark(true)}
                     disabled={loading}
                 >
@@ -120,7 +122,7 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                 <Button
                     size="lg"
                     variant="destructive"
-                    className="h-16 w-32 text-lg"
+                    className="h-16 w-full sm:w-32 text-lg"
                     onClick={() => handleMark(false)}
                     disabled={loading}
                 >

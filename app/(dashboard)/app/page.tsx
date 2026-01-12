@@ -55,7 +55,7 @@ export default function DashboardPage() {
     return (
         <div className="space-y-6 pb-10">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-                <div className="col-span-full lg:col-span-4 space-y-6">
+                <div className="col-span-full lg:col-span-4 space-y-6 min-w-0">
                     {/* Today's Action */}
                     <section>
                         <h2 className="text-lg font-semibold mb-2">Today</h2>
