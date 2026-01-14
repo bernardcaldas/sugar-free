@@ -36,11 +36,6 @@ export function Header() {
                         {userInitial}
                     </div>
                 )}
-                <Link href="/app/settings">
-                    <Button variant="ghost" size="icon">
-                        <Settings className="h-5 w-5" />
-                    </Button>
-                </Link>
                 <Button variant="ghost" size="icon" onClick={handleLogout}>
                     <LogOut className="h-5 w-5" />
                 </Button>

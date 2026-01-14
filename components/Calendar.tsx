@@ -50,7 +50,11 @@ export function Calendar({ logs, currentDate, onMonthChange, onDayClick }: Calen
                     const isToday = isSameDay(day, new Date())
                     let bgClass = "bg-gray-100 dark:bg-gray-800"
                     if (log) {
-                        bgClass = log.success ? "bg-green-100 text-green-700 border-green-200" : "bg-red-100 text-red-700 border-red-200"
+                        if (log.is_ticket) {
+                            bgClass = "bg-amber-100 text-amber-700 border-amber-200"
+                        } else {
+                            bgClass = log.success ? "bg-green-100 text-green-700 border-green-200" : "bg-red-100 text-red-700 border-red-200"
+                        }
                     }
 
                     return (

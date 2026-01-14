@@ -5,8 +5,6 @@ import { useDailyLogs } from '@/hooks/useDailyLogs'
 import { ActionCard } from '@/components/ActionCard'
 import { StatsCard } from '@/components/StatsCard'
 import { Calendar } from '@/components/Calendar'
-import { Timeline } from '@/components/Timeline'
-import { NextReward } from '@/components/NextReward'
 import { Motivation } from '@/components/Motivation'
 import { calculateStreak, calculateMonthStats } from '@/lib/utils'
 import { useState, useEffect, useMemo } from 'react'
@@ -71,16 +69,6 @@ export default function DashboardPage() {
                     {/* Stats */}
                     <section>
                         <StatsCard streak={streak} percentage={monthPercentage} />
-                    </section>
-
-                    {/* Next Reward */}
-                    <section>
-                        <NextReward currentStreak={streak} />
-                    </section>
-
-                    {/* Timeline */}
-                    <section>
-                        <Timeline currentStreak={streak} />
                     </section>
                 </div>
 

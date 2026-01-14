@@ -50,8 +50,14 @@ export function calculateStreak(logs: DailyLog[]): number {
 
   while (true) {
     const dateStr = d.toISOString().split('T')[0]
-    if (logMap.get(dateStr)) {
+    const log = logs.find(l => l.date === dateStr)
+
+    if (log?.success) {
       streak++
+      d.setDate(d.getDate() - 1)
+    } else if (log?.is_ticket) {
+      // It's a ticket day. Don't increment streak, but don't break it either.
+      // Just go back one day.
       d.setDate(d.getDate() - 1)
     } else {
       break

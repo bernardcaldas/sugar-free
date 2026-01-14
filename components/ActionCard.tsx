@@ -45,6 +45,58 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
     }
 
     if (log) {
+        // Ticket State
+        if (log.is_ticket) {
+            return (
+                <Card className="border-l-4 border-l-amber-500 bg-amber-50/10">
+                    <CardContent className="flex items-center justify-between p-6">
+                        <div>
+                            <h3 className="font-semibold text-lg flex items-center gap-2 text-amber-700 dark:text-amber-500">
+                                <Check className="text-amber-500" /> Planned Sugar Ticket
+                            </h3>
+                            <p className="text-sm text-gray-500 mt-1">Enjoy your mindful choice.</p>
+                        </div>
+                        {/* Edit button logic can remain or be customized */}
+                        <Button variant="ghost" size="sm" onClick={() => setOpen(true)} className="opacity-50 hover:opacity-100">
+                            Edit
+                        </Button>
+
+                        {/* Dialog for conversion/undo if needed, re-using existing dialog logic below logic structure if convenient, 
+                             but here simpler to just allow re-opening standard dialog to "Undo" or change */}
+                        <Dialog open={open} onOpenChange={setOpen}>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Edit Day</DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4 py-4">
+                                    <p className="text-sm text-muted-foreground text-center">
+                                        This day is marked as a <strong>Sugar Ticket</strong>.
+                                    </p>
+                                    <div className="flex gap-4 justify-center">
+                                        {/* Allow reverting to standard Logging */}
+                                        <Button
+                                            variant="outline"
+                                            onClick={() => handleMark(true)}
+                                            disabled={loading}
+                                        >
+                                            Actually Sugar Free
+                                        </Button>
+                                        <Button
+                                            variant="destructive"
+                                            onClick={() => handleMark(false)}
+                                            disabled={loading}
+                                        >
+                                            Reset / Failure
+                                        </Button>
+                                    </div>
+                                </div>
+                            </DialogContent>
+                        </Dialog>
+                    </CardContent>
+                </Card>
+            )
+        }
+
         return (
             <Card className={`border-l-4 ${log.success ? 'border-l-green-500' : 'border-l-red-500'}`}>
                 <CardContent className="flex items-center justify-between p-6">

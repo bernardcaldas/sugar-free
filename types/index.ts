@@ -4,6 +4,7 @@ export interface DailyLog {
   date: string // 'YYYY-MM-DD'
   success: boolean
   note?: string
+  is_ticket?: boolean
   created_at: string
   updated_at: string
 }

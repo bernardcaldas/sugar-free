@@ -46,22 +46,22 @@ export default function Home() {
           <div className="container md:px-6 mx-auto">
             <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3">
               <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg">
-                <div className="p-2 bg-black bg-opacity-5 rounded-full">
+                <div className="p-3 bg-primary/10 rounded-full">
                   <svg className=" w-10 h-10 text-primary" fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="18" rx="2" ry="2" width="18" x="3" y="4" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" /></svg>
                 </div>
                 <h2 className="text-xl font-bold">Daily Tracking</h2>
                 <p className="text-gray-500 dark:text-gray-400 text-center">Mark your sugar-free days with a single click.</p>
               </div>
               <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg">
-                <div className="p-2 bg-black bg-opacity-5 rounded-full">
+                <div className="p-3 bg-primary/10 rounded-full">
                   <svg className=" w-10 h-10 text-primary" fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20V10" /><path d="M18 20V4" /><path d="M6 20v-4" /></svg>
                 </div>
                 <h2 className="text-xl font-bold">Progress Stats</h2>
                 <p className="text-gray-500 dark:text-gray-400 text-center">See your streak and monthly success percentage.</p>
               </div>
               <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg">
-                <div className="p-2 bg-black bg-opacity-5 rounded-full">
-                  <svg className=" w-10 h-10 text-primary" fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>
+                <div className="p-3 bg-primary/10 rounded-full">
+                  <svg className=" w-10 h-10 text-primary dark:text-white" fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>
                 </div>
                 <h2 className="text-xl font-bold">Stay Healthy</h2>
                 <p className="text-gray-500 dark:text-gray-400 text-center">Reduce sugar intake and improve your well-being.</p>

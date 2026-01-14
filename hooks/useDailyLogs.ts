@@ -31,7 +31,7 @@ export function useDailyLogs(user_id: string | undefined) {
         setLoading(false)
     }, [user_id])
 
-    const markDay = async (date: Date, success: boolean, note?: string) => {
+    const markDay = async (date: Date, success: boolean, note?: string, is_ticket?: boolean) => {
         if (!user_id) return false
         const dateStr = format(date, 'yyyy-MM-dd')
 
@@ -42,6 +42,7 @@ export function useDailyLogs(user_id: string | undefined) {
                 date: dateStr,
                 success,
                 note,
+                is_ticket: is_ticket || false,
                 updated_at: new Date().toISOString()
             }, { onConflict: 'user_id, date' })
 
@@ -49,12 +50,16 @@ export function useDailyLogs(user_id: string | undefined) {
             toast.error(error.message)
             return false
         } else {
-            toast.success(success ? 'Day saved! Great job!' : 'Day marked. Keep going!')
+            if (is_ticket) {
+                toast.success('Ticket used wisely!')
+            } else {
+                toast.success(success ? 'Day saved! Great job!' : 'Day marked. Keep going!')
+            }
 
             setLogs(prev => {
                 const exists = prev.find(l => l.date === dateStr)
                 if (exists) {
-                    return prev.map(l => l.date === dateStr ? { ...l, success, note } : l)
+                    return prev.map(l => l.date === dateStr ? { ...l, success, note, is_ticket } : l)
                 }
                 // Mock new log for immediate UI update
                 const newLog: DailyLog = {
