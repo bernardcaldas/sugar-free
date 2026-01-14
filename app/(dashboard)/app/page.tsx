@@ -11,10 +11,12 @@ import { useState, useEffect, useMemo } from 'react'
 import { format, isSameDay, getDaysInMonth } from 'date-fns'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { DailyLog } from '@/types'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function DashboardPage() {
     const { user } = useAuth()
     const { logs, loading: logsLoading, fetchLogs, markDay } = useDailyLogs(user?.id)
+    const { t } = useLanguage()
 
     const [currentMonth, setCurrentMonth] = useState(new Date())
     const [selectedDate, setSelectedDate] = useState<Date | null>(null)
@@ -57,7 +59,7 @@ export default function DashboardPage() {
                 <div className="col-span-full lg:col-span-4 space-y-6 min-w-0">
                     {/* Today's Action */}
                     <section>
-                        <h2 className="text-lg font-semibold mb-2">Today</h2>
+                        <h2 className="text-lg font-semibold mb-2">{t('home.today_title')}</h2>
                         <ActionCard
                             log={todayLog}
                             onMark={(s, n) => handleMark(today, s, n)}
@@ -75,7 +77,7 @@ export default function DashboardPage() {
                 <div className="col-span-full lg:col-span-3">
                     {/* Calendar */}
                     <section>
-                        <h2 className="text-lg font-semibold mb-2">History</h2>
+                        <h2 className="text-lg font-semibold mb-2">{t('home.history_title')}</h2>
                         <Calendar
                             logs={logs}
                             currentDate={currentMonth}

@@ -9,7 +9,10 @@ interface NextRewardProps {
     currentStreak: number
 }
 
+import { useLanguage } from '@/contexts/LanguageContext'
+
 export function NextReward({ currentStreak }: NextRewardProps) {
+    const { t } = useLanguage()
     // Find next milestone
     const nextMilestone = MILESTONES.find(m => m.days > currentStreak)
 
@@ -17,12 +20,16 @@ export function NextReward({ currentStreak }: NextRewardProps) {
     if (!nextMilestone) {
         return (
             <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">Next Reward</h2>
+                <h2 className="text-lg font-semibold mb-2">{t('journey.next_reward.title')}</h2>
                 <Card className="bg-green-50 dark:bg-green-900/20 border-green-200">
                     <CardContent className="p-4 flex items-center justify-between">
                         <div>
-                            <h3 className="font-semibold text-green-700 dark:text-green-400">All Milestones Achieved!</h3>
-                            <p className="text-sm text-green-600/80">You are a legend. Keep going!</p>
+                            <h3 className="font-semibold text-green-700 dark:text-green-400">
+                                {t('journey.next_reward.completed_title')}
+                            </h3>
+                            <p className="text-sm text-green-600/80">
+                                {t('journey.next_reward.completed_subtitle')}
+                            </p>
                         </div>
                     </CardContent>
                 </Card>
@@ -52,24 +59,28 @@ export function NextReward({ currentStreak }: NextRewardProps) {
 
     return (
         <div className="mb-6">
-            <h2 className="text-lg font-semibold mb-2">Next Reward</h2>
+            <h2 className="text-lg font-semibold mb-2">{t('journey.next_reward.title')}</h2>
             <Card>
                 <CardContent className="p-4 space-y-3">
                     <div className="flex justify-between items-center">
                         <div>
-                            <h3 className="font-semibold text-primary">{nextMilestone.bodyBenefit}</h3>
-                            <p className="text-sm text-muted-foreground">{nextMilestone.title}</p>
+                            <h3 className="font-semibold text-primary">
+                                {t(`milestones.${nextMilestone.days}.body`)}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                                {t(`milestones.${nextMilestone.days}.title`)}
+                            </p>
                         </div>
                         <span className="text-sm font-semibold text-muted-foreground">
-                            ({nextMilestone.days} days)
+                            ({nextMilestone.days} {t('common.days')})
                         </span>
                     </div>
 
                     <div className="space-y-1">
                         <Progress value={progressPercent} className="h-2" />
                         <div className="flex justify-between text-xs text-muted-foreground">
-                            <span>{currentStreak} days</span>
-                            <span>{nextMilestone.days - currentStreak} days left</span>
+                            <span>{currentStreak} {t('common.days')}</span>
+                            <span>{nextMilestone.days - currentStreak} {t('journey.next_reward.days_left')}</span>
                         </div>
                     </div>
                 </CardContent>

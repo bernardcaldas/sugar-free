@@ -4,26 +4,28 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Home, Star, Settings } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export function BottomNav() {
     const pathname = usePathname()
+    const { t } = useLanguage()
 
     const navItems = [
         {
             href: '/app',
-            label: 'Home',
+            label: t('nav.home'),
             icon: Home,
             activeMatch: (path: string) => path === '/app'
         },
         {
             href: '/app/journey',
-            label: 'Journey',
+            label: t('nav.journey'),
             icon: Star,
             activeMatch: (path: string) => path.startsWith('/app/journey')
         },
         {
             href: '/app/settings',
-            label: 'Settings',
+            label: t('nav.settings'),
             icon: Settings,
             activeMatch: (path: string) => path.startsWith('/app/settings')
         }

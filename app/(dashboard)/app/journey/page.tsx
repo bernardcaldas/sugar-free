@@ -7,10 +7,12 @@ import { NextReward } from '@/components/NextReward'
 import { SugarTicketCard } from '@/components/SugarTicketCard'
 import { calculateStreak } from '@/lib/utils'
 import { useMemo, useEffect } from 'react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function JourneyPage() {
     const { user } = useAuth()
     const { logs, fetchLogs, markDay } = useDailyLogs(user?.id)
+    const { t } = useLanguage()
 
     // Ensure logs are fetched
     useEffect(() => {
@@ -24,8 +26,8 @@ export default function JourneyPage() {
     return (
         <div className="space-y-6 pb-10">
             <div>
-                <h1 className="text-2xl font-bold mb-2">Your Journey</h1>
-                <p className="text-muted-foreground">Keep going! Every sugar-free day counts.</p>
+                <h1 className="text-2xl font-bold mb-2">{t('journey.title')}</h1>
+                <p className="text-muted-foreground">{t('journey.subtitle')}</p>
             </div>
 
             {/* Flex Day Card - Sugar Ticket */}

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { DailyLog } from '@/types'
 import { cn } from '@/lib/utils'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 import { CalendarOff } from 'lucide-react'
 
@@ -156,6 +157,10 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
         )
     }
 
+    const { t } = useLanguage()
+
+    // ... (rest of logic)
+
     // Not logged yet
     const [confirmState, setConfirmState] = useState<'yes' | 'no' | null>(null)
 
@@ -175,7 +180,7 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-center">Did you stay sugar-free today?</CardTitle>
+                <CardTitle className="text-center">{t('home.action_card_title')}</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col sm:flex-row justify-center gap-4 pb-8">
                 <Button
@@ -189,10 +194,9 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                 >
                     {confirmState === 'yes' ? (
                         <span className="text-xs flex flex-col items-center leading-tight">
-                            <span>Tap again</span>
-                            <span>to confirm</span>
+                            <span>{t('home.tap_to_confirm')}</span>
                         </span>
-                    ) : "Yes!"}
+                    ) : t('common.yes')}
                 </Button>
                 <Button
                     size="lg"
@@ -206,10 +210,9 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                 >
                     {confirmState === 'no' ? (
                         <span className="text-xs flex flex-col items-center leading-tight">
-                            <span>Tap again</span>
-                            <span>to confirm</span>
+                            <span>{t('home.tap_to_confirm')}</span>
                         </span>
-                    ) : "No"}
+                    ) : t('common.no')}
                 </Button>
             </CardContent>
         </Card>

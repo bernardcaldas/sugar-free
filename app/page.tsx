@@ -1,85 +1,115 @@
+'use client'
+
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function Home() {
+  const { t, language, setLanguage } = useLanguage()
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'pt-br' : 'en')
+  }
+
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="px-6 h-16 flex items-center border-b">
+    <div className="flex flex-col min-h-screen bg-background">
+      {/* Header Minimalista */}
+      <header className="px-6 h-20 flex items-center justify-between max-w-7xl mx-auto w-full">
         <div className="flex items-center gap-2 font-bold text-xl text-primary">
           <CheckCircle2 className="w-6 h-6" />
           <span>Sugar Free</span>
         </div>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/login">
-            Login
+        <nav className="flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggleLanguage}
+            className="font-medium"
+          >
+            {language === 'en' ? 'PT-BR' : 'EN'}
+          </Button>
+          <Link href="/login">
+            <Button variant="ghost" className="font-medium hover:bg-transparent hover:text-primary transition-colors">
+              {t('landing.nav_login')}
+            </Button>
           </Link>
-          {/* <Link className="text-sm font-medium hover:underline underline-offset-4" href="/about">
-            About
-          </Link> */}
         </nav>
       </header>
-      <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 px-6">
-          <div className="container md:px-6 mx-auto">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  Track your sugar-free journey
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Build healthy habits one day at a time. Visualize your progress and stay motivated.
-                </p>
-              </div>
-              <div className="space-x-4">
-                <Link href="/login">
-                  <Button size="lg" className="h-12 px-8">
-                    Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800 px-6">
-          <div className="container md:px-6 mx-auto">
-            <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3">
-              <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg">
-                <div className="p-3 bg-primary/10 rounded-full">
-                  <svg className=" w-10 h-10 text-primary" fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="18" rx="2" ry="2" width="18" x="3" y="4" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" /></svg>
+      <main className="flex-1 flex flex-col justify-center">
+        {/* Hero Section - Split Screen */}
+        <section className="w-full px-6 py-12 lg:py-0">
+          <div className="container max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+
+              {/* Coluna Texto (Esquerda) */}
+              <div className="flex flex-col space-y-6 text-center lg:text-left order-2 lg:order-1">
+                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+                  {t('landing.hero_title_1')} <br className="hidden lg:block" />
+                  <span className="text-primary">{t('landing.hero_title_2')}</span>
+                </h1>
+                <p className="mx-auto lg:mx-0 max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400 leading-relaxed">
+                  {t('landing.hero_subtitle')}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                  <Link href="/login" className="w-full sm:w-auto">
+                    <Button size="lg" className="w-full h-14 px-8 text-lg rounded-full">
+                      {t('landing.cta_button')} <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
                 </div>
-                <h2 className="text-xl font-bold">Daily Tracking</h2>
-                <p className="text-gray-500 dark:text-gray-400 text-center">Mark your sugar-free days with a single click.</p>
-              </div>
-              <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg">
-                <div className="p-3 bg-primary/10 rounded-full">
-                  <svg className=" w-10 h-10 text-primary" fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20V10" /><path d="M18 20V4" /><path d="M6 20v-4" /></svg>
+
+                {/* Prova Social Minimalista (Texto Simples) */}
+                <div className="pt-8 flex items-center justify-center lg:justify-start gap-8 text-sm text-gray-400 font-medium">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                    <span>{t('landing.social_simple')}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                    <span>{t('landing.social_focus')}</span>
+                  </div>
                 </div>
-                <h2 className="text-xl font-bold">Progress Stats</h2>
-                <p className="text-gray-500 dark:text-gray-400 text-center">See your streak and monthly success percentage.</p>
               </div>
-              <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg">
-                <div className="p-3 bg-primary/10 rounded-full">
-                  <svg className=" w-10 h-10 text-primary dark:text-white" fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>
+
+              {/* Coluna Imagem (Direita) - Mockup */}
+              <div className="flex justify-center items-center order-1 lg:order-2 relative">
+                {/* Elemento decorativo de fundo minimalista */}
+                <div className="absolute w-[300px] h-[300px] bg-primary/20 blur-3xl rounded-full -z-10 lg:w-[500px] lg:h-[500px]" />
+
+                <div className="relative w-[280px] sm:w-[320px] md:w-[360px] lg:w-[400px]">
+                  <Image
+                    src="/tela1-portrait.png"
+                    alt="App Interface on iPhone"
+                    width={800} // Ajustado para manter proporção, mas controlado pelo wrapper CSS
+                    height={1600}
+                    className="drop-shadow-2xl rounded-[3rem] border-[8px] border-white/10"
+                    priority
+                  />
                 </div>
-                <h2 className="text-xl font-bold">Stay Healthy</h2>
-                <p className="text-gray-500 dark:text-gray-400 text-center">Reduce sugar intake and improve your well-being.</p>
               </div>
+
             </div>
           </div>
         </section>
       </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-gray-500 dark:text-gray-400">© 2026 Sugar Free. All rights reserved.</p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-xs hover:underline underline-offset-4" href="#">
-            Terms of Service
-          </Link>
-          <Link className="text-xs hover:underline underline-offset-4" href="#">
-            Privacy
-          </Link>
-        </nav>
+
+      {/* Footer Ultra Simples */}
+      <footer className="w-full py-8 border-t mt-auto">
+        <div className="container max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2 text-sm text-gray-500">
+            <CheckCircle2 className="w-4 h-4" />
+            <span>© 2026 Sugar Free</span>
+          </div>
+
+          <nav className="flex gap-6 text-sm text-gray-500">
+            <Link href="#" className="hover:text-primary transition-colors">{t('landing.footer_terms')}</Link>
+            <Link href="#" className="hover:text-primary transition-colors">{t('landing.footer_privacy')}</Link>
+            <Link href="#" className="hover:text-primary transition-colors">{t('landing.footer_instagram')}</Link>
+          </nav>
+        </div>
       </footer>
     </div>
   )

@@ -10,7 +10,10 @@ interface TimelineProps {
     currentStreak: number
 }
 
+import { useLanguage } from '@/contexts/LanguageContext'
+
 export function Timeline({ currentStreak }: TimelineProps) {
+    const { t } = useLanguage()
     // Calculate progress to next milestone
     const nextMilestone = MILESTONES.find(m => m.days > currentStreak)
 
@@ -25,10 +28,10 @@ export function Timeline({ currentStreak }: TimelineProps) {
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold">Your Journey</h2>
+                <h2 className="text-lg font-semibold">{t('journey.title')}</h2>
                 {nextMilestone && (
                     <span className="text-xs text-muted-foreground">
-                        {nextMilestone.days - currentStreak} days to next reward
+                        {nextMilestone.days - currentStreak} {t('journey.next_reward.days_left')}
                     </span>
                 )}
             </div>
@@ -69,12 +72,12 @@ export function Timeline({ currentStreak }: TimelineProps) {
                                         "text-xs font-bold px-2 py-0.5 rounded-full border",
                                         isUnlocked ? "bg-green-100 text-green-700 border-green-200" : "bg-gray-100 text-gray-500 border-gray-200"
                                     )}>
-                                        {milestone.days} DAYS
+                                        {milestone.days} {t('common.days').toUpperCase()}
                                     </span>
                                 </div>
                                 <CardTitle className="text-base flex items-center gap-2">
                                     {milestone.icon}
-                                    {milestone.title}
+                                    {t(`milestones.${milestone.days}.title`)}
                                 </CardTitle>
                             </CardHeader>
 
@@ -87,7 +90,7 @@ export function Timeline({ currentStreak }: TimelineProps) {
                                         </div>
                                         <div>
                                             <p className="font-medium text-foreground">Body</p>
-                                            <p className="text-muted-foreground text-xs">{milestone.bodyBenefit}</p>
+                                            <p className="text-muted-foreground text-xs">{t(`milestones.${milestone.days}.body`)}</p>
                                         </div>
                                     </div>
 
@@ -97,7 +100,7 @@ export function Timeline({ currentStreak }: TimelineProps) {
                                         </div>
                                         <div>
                                             <p className="font-medium text-foreground">Mind</p>
-                                            <p className="text-muted-foreground text-xs">{milestone.mindBenefit}</p>
+                                            <p className="text-muted-foreground text-xs">{t(`milestones.${milestone.days}.mind`)}</p>
                                         </div>
                                     </div>
                                     <p className="text-[10px] text-muted-foreground text-center pt-2 italic">

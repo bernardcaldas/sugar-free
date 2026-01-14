@@ -2,15 +2,19 @@
 
 import Link from 'next/link'
 import { format } from 'date-fns'
-import { Settings, LogOut, User as UserIcon } from 'lucide-react'
+import { Settings, LogOut, User as UserIcon, Sun, Moon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
+import { useTheme } from 'next-themes'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export function Header() {
     const router = useRouter()
     const { user } = useAuth()
+    const { theme, setTheme } = useTheme()
+    const { language, setLanguage } = useLanguage()
 
     // Hydration mismatch might occur if using new Date() directly during server/client diff.
     const today = format(new Date(), 'EEEE, MMMM do')
@@ -36,6 +40,27 @@ export function Header() {
                         {userInitial}
                     </div>
                 )}
+
+                {/* Language Toggle */}
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setLanguage(language === 'en' ? 'pt-br' : 'en')}
+                    title="Switch Language"
+                >
+                    <span className="text-xs font-bold">{language?.toUpperCase()}</span>
+                </Button>
+
+                {/* Theme Toggle */}
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    title="Toggle Theme"
+                >
+                    {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                </Button>
+
                 <Button variant="ghost" size="icon" onClick={handleLogout}>
                     <LogOut className="h-5 w-5" />
                 </Button>
