@@ -20,9 +20,11 @@ interface ActionCardProps {
 }
 
 export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
+    const { t } = useLanguage()
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false)
     const [note, setNote] = useState(log?.note || '')
+    const [confirmState, setConfirmState] = useState<'yes' | 'no' | null>(null)
 
     const handleMark = async (success: boolean) => {
         setLoading(true)
@@ -53,7 +55,7 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                     <CardContent className="flex items-center justify-between p-6">
                         <div>
                             <h3 className="font-semibold text-lg flex items-center gap-2 text-amber-700 dark:text-amber-500">
-                                <Check className="text-amber-500" /> Planned Sugar Ticket
+                                <Check className="text-amber-500" /> {t('journey.sugar_ticket.title')}
                             </h3>
                             <p className="text-sm text-gray-500 mt-1">Enjoy your mindful choice.</p>
                         </div>
@@ -104,9 +106,9 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                     <div>
                         <h3 className="font-semibold text-lg flex items-center gap-2">
                             {log.success ? (
-                                <> <Check className="text-green-500" /> Sugar Free Day! </>
+                                <> <Check className="text-green-500" /> {t('home.yes_button')} </>
                             ) : (
-                                <> <X className="text-red-500" /> Sugar Consumed </>
+                                <> <X className="text-red-500" /> {t('home.no_button')} </>
                             )}
                         </h3>
                         {log.note && <p className="text-sm text-gray-500 mt-1">"{log.note}"</p>}
@@ -127,7 +129,7 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                                         onClick={() => handleMark(true)}
                                         disabled={loading}
                                     >
-                                        Sugar Free
+                                        {t('common.yes')}
                                     </Button>
                                     <Button
                                         variant={!log.success ? "destructive" : "outline"}
@@ -135,7 +137,7 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                                         onClick={() => handleMark(false)}
                                         disabled={loading}
                                     >
-                                        Consumed Sugar
+                                        {t('common.no')}
                                     </Button>
                                 </div>
                                 <div className="space-y-2">
@@ -143,11 +145,11 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                                     <Input
                                         value={note}
                                         onChange={(e) => setNote(e.target.value)}
-                                        placeholder="Was it a cake? Or did you resist?"
+                                        placeholder="Note..."
                                     />
                                 </div>
                                 <Button className="w-full" onClick={() => handleMark(log.success)} disabled={loading}>
-                                    Update Note
+                                    {t('common.save')}
                                 </Button>
                             </div>
                         </DialogContent>
@@ -156,13 +158,6 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
             </Card>
         )
     }
-
-    const { t } = useLanguage()
-
-    // ... (rest of logic)
-
-    // Not logged yet
-    const [confirmState, setConfirmState] = useState<'yes' | 'no' | null>(null)
 
     const handleConfirmStep = (type: 'yes' | 'no') => {
         if (confirmState === type) {
