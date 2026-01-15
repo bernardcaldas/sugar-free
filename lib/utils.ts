@@ -8,6 +8,12 @@ export function cn(...inputs: ClassValue[]) {
 import { DailyLog } from "@/types"
 import { differenceInDays, isSameDay } from "date-fns"
 
+export function parseLocalDate(dateStr: string) {
+  if (!dateStr) return new Date()
+  const [year, month, day] = dateStr.split('-').map(Number)
+  return new Date(year, month - 1, day)
+}
+
 export function calculateStreak(logs: DailyLog[]): number {
   if (!logs.length) return 0
 
@@ -19,22 +25,12 @@ export function calculateStreak(logs: DailyLog[]): number {
   today.setHours(0, 0, 0, 0)
 
   // Check if today or yesterday is the start
-  const firstLogDate = new Date(sorted[0].date)
+  const firstLogDate = parseLocalDate(sorted[0].date)
   firstLogDate.setHours(0, 0, 0, 0) // Normalize
 
-  // If first log is older than yesterday, streak is broken (0), UNLESS today hasn't been logged yet but yesterday was success.
-  // Actually, standard streak: counts consecutive success days going back from today/yesterday.
-
-  // Naive approach: iterate and count consecutive success
-  // We need to handle "missing days" as break.
-
-  // Better: check continuity.
   // ... (Simplification for MVP: just count success=true from top, taking gaps into account)
 
   let current = today
-  // If today is logged, start from today. If not, start from yesterday?
-  // Let's just iterate logs. If log date == current, good. If log date < current by 1, good. If gap > 1, break.
-  // Actually, we need to walk BACKWARDS from today.
 
   // Map of date string -> success
   const logMap = new Map<string, boolean>()
@@ -73,4 +69,3 @@ export function calculateMonthStats(logs: DailyLog[], totalDaysInMonth: number) 
   const percentage = totalDaysInMonth > 0 ? (successCount / totalDaysInMonth) * 100 : 0
   return Math.round(percentage)
 }
-

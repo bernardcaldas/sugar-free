@@ -6,7 +6,7 @@ import { ActionCard } from '@/components/ActionCard'
 import { StatsCard } from '@/components/StatsCard'
 import { Calendar } from '@/components/Calendar'
 import { Motivation } from '@/components/Motivation'
-import { calculateStreak, calculateMonthStats } from '@/lib/utils'
+import { calculateStreak, calculateMonthStats, parseLocalDate } from '@/lib/utils'
 import { useState, useEffect, useMemo } from 'react'
 import { format, isSameDay, getDaysInMonth } from 'date-fns'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -31,7 +31,7 @@ export default function DashboardPage() {
     // Get current day log
     const today = useMemo(() => new Date(), [])
     const todayLog = useMemo(() => {
-        return logs.find(l => isSameDay(new Date(l.date), today))
+        return logs.find(l => isSameDay(parseLocalDate(l.date), today))
     }, [logs, today])
 
     // Calculate stats

@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Ticket, Lock, Clock, Check } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, parseLocalDate } from '@/lib/utils'
 import { DailyLog } from '@/types'
 import { differenceInDays, addDays, format, isSameDay } from 'date-fns'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
@@ -31,7 +31,7 @@ export function SugarTicketCard({ currentStreak, logs, onUseTicket }: SugarTicke
         // Find last used ticket
         const ticketLogs = logs.filter(l => l.is_ticket).sort((a, b) => b.date.localeCompare(a.date))
         const lastTicket = ticketLogs[0]
-        const lastDate = lastTicket ? new Date(lastTicket.date) : null
+        const lastDate = lastTicket ? parseLocalDate(lastTicket.date) : null
 
         // Determine Phase based on Streak (or maybe total days logic?)
         // Prompt: "Fase 1: 10 dias consecutivos. Fase 2: Consolidação"

@@ -32,7 +32,7 @@ export default function SignupPage() {
             if (error) {
                 toast.error(error.message)
             } else {
-                toast.success('Account created! Please check your email to confirm.')
+                toast.success('Account created! Please try log in the app')
                 // router.push('/login') // Typically you want them to verify email or auto-login if disabled
             }
         } catch (error) {
