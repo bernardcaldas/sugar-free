@@ -4,46 +4,46 @@ import { useState, useEffect } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { PartyPopper, Share2, CalendarCheck } from 'lucide-react'
-import { DailyLog } from '@/types'
-import { calculateMonthStats } from '@/lib/utils'
-import { getDaysInMonth, subMonths, format, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns'
+import { supabase } from '@/lib/supabase'
+import { getDaysInMonth, subMonths, format, startOfMonth, endOfMonth } from 'date-fns'
 import confetti from 'canvas-confetti'
 
 interface MonthlyRecapProps {
-    logs: DailyLog[]
+    userId?: string
 }
 
-export function MonthlyRecap({ logs }: MonthlyRecapProps) {
+export function MonthlyRecap({ userId }: MonthlyRecapProps) {
     const [isOpen, setIsOpen] = useState(false)
     const [stats, setStats] = useState<{ percentage: number; totalDays: number; monthName: string }>({ percentage: 0, totalDays: 0, monthName: '' })
 
     useEffect(() => {
-        // Check local storage for last seen month
-        const lastSeenMonth = localStorage.getItem('lastSeenMonthRecap')
-        const currentMonthKey = format(new Date(), 'yyyy-MM')
+        if (!userId) return
 
-        // If we haven't seen this month's recap AND it is not the very first month of usage (simple check: valid logs exist from prev month)
-        // For prototype: Just check if we haven't seen it for *this* current month period roughly.
-        // Actually, we want to show it ONCE when we enter a new month.
+        const checkAndFetchRecap = async () => {
+            // Check local storage for last seen month
+            const lastSeenMonth = localStorage.getItem('lastSeenMonthRecap')
+            const currentMonthKey = format(new Date(), 'yyyy-MM')
 
-        if (lastSeenMonth !== currentMonthKey) {
-            // Calculate previous month stats
-            const prevMonthDate = subMonths(new Date(), 1)
-            const daysInPrevMonth = getDaysInMonth(prevMonthDate)
+            // Only proceed if we haven't seen this month's recap
+            if (lastSeenMonth !== currentMonthKey) {
+                // Calculate previous month stats
+                const prevMonthDate = subMonths(new Date(), 1)
+                const start = format(startOfMonth(prevMonthDate), 'yyyy-MM-dd')
+                const end = format(endOfMonth(prevMonthDate), 'yyyy-MM-dd')
 
-            // Filter logs for previous month
-            const start = startOfMonth(prevMonthDate)
-            const end = endOfMonth(prevMonthDate)
+                // Fetch specifically previous month data
+                const { data: prevMonthLogs, error } = await supabase
+                    .from('daily_logs')
+                    .select('*')
+                    .eq('user_id', userId)
+                    .gte('date', start)
+                    .lte('date', end)
 
-            const prevMonthLogs = logs.filter(log => {
-                const logDate = new Date(log.date) // Assuming ISO format YYYY-MM-DD
-                // Need to parse correctly if it includes time, but usually YYYY-MM-DD
-                // Safe parsing:
-                const d = new Date(log.date + 'T00:00:00')
-                return isWithinInterval(d, { start, end })
-            })
+                if (error || !prevMonthLogs || prevMonthLogs.length === 0) {
+                    return // No data found, maybe new user, skip recap
+                }
 
-            if (prevMonthLogs.length > 0) {
+                const daysInPrevMonth = getDaysInMonth(prevMonthDate)
                 const successCount = prevMonthLogs.filter(l => l.success).length
                 const percentage = Math.round((successCount / daysInPrevMonth) * 100)
 
@@ -62,7 +62,9 @@ export function MonthlyRecap({ logs }: MonthlyRecapProps) {
                 })
             }
         }
-    }, [logs])
+
+        checkAndFetchRecap()
+    }, [userId])
 
     const handleClose = () => {
         const currentMonthKey = format(new Date(), 'yyyy-MM')
