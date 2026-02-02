@@ -6,11 +6,13 @@ import { ActionCard } from '@/components/ActionCard'
 import { StatsCard } from '@/components/StatsCard'
 import { Calendar } from '@/components/Calendar'
 import { Motivation } from '@/components/Motivation'
+import { SOSModule } from '@/components/SOSModule'
+import { MonthlyRecap } from '@/components/MonthlyRecap'
+import { DebugSeeder } from '@/components/DebugSeeder'
 import { calculateStreak, calculateMonthStats, parseLocalDate } from '@/lib/utils'
 import { useState, useEffect, useMemo } from 'react'
 import { format, isSameDay, getDaysInMonth } from 'date-fns'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { DailyLog } from '@/types'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function DashboardPage() {
@@ -55,17 +57,24 @@ export default function DashboardPage() {
 
     return (
         <div className="space-y-6 pb-10">
+            <MonthlyRecap userId={user?.id} />
+            {process.env.NODE_ENV === 'development' && <DebugSeeder />}
+
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
                 <div className="col-span-full lg:col-span-4 space-y-6 min-w-0">
                     {/* Today's Action */}
-                    <section>
-                        <h2 className="text-lg font-semibold mb-2">{t('home.today_title')}</h2>
-                        <ActionCard
-                            log={todayLog}
-                            onMark={(s, n) => handleMark(today, s, n)}
-                            isFuture={false}
-                        />
-                        <Motivation streakActive={streak > 0} />
+                    <section className="space-y-6">
+                        <SOSModule onComplete={() => handleMark(new Date(), true, "SOS_COMPLETED")} />
+
+                        <div>
+                            <h2 className="text-lg font-semibold mb-2">{t('home.today_title')}</h2>
+                            <ActionCard
+                                log={todayLog}
+                                onMark={(s, n) => handleMark(today, s, n)}
+                                isFuture={false}
+                            />
+                            <Motivation streakActive={streak > 0} />
+                        </div>
                     </section>
 
                     {/* Stats */}

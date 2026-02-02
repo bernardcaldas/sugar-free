@@ -5,6 +5,7 @@ export interface DailyLog {
   success: boolean
   note?: string
   is_ticket?: boolean
+  is_flexible?: boolean
   created_at: string
   updated_at: string
 }

@@ -31,6 +31,25 @@ export function useDailyLogs(user_id: string | undefined) {
         setLoading(false)
     }, [user_id])
 
+    const fetchAllLogs = useCallback(async () => {
+        if (!user_id) return
+        setLoading(true)
+
+        // Fetch all logs for the user (for history/trophies)
+        const { data, error } = await supabase
+            .from('daily_logs')
+            .select('*')
+            .eq('user_id', user_id)
+            .order('date', { ascending: true })
+
+        if (error) {
+            console.error(error)
+        } else {
+            setLogs(data || [])
+        }
+        setLoading(false)
+    }, [user_id])
+
     const markDay = async (date: Date, success: boolean, note?: string, is_ticket?: boolean) => {
         if (!user_id) return false
         const dateStr = format(date, 'yyyy-MM-dd')
@@ -77,5 +96,5 @@ export function useDailyLogs(user_id: string | undefined) {
         }
     }
 
-    return { logs, loading, fetchLogs, markDay }
+    return { logs, loading, fetchLogs, fetchAllLogs, markDay }
 }

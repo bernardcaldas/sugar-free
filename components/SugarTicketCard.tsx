@@ -14,79 +14,29 @@ interface SugarTicketCardProps {
     currentStreak: number
     logs: DailyLog[]
     onUseTicket: (date: Date) => Promise<boolean>
+    ticketsAvailable: number
+    nextTicketIn: number
 }
 
 import { useLanguage } from '@/contexts/LanguageContext'
 
 // ... imports
 
-export function SugarTicketCard({ currentStreak, logs, onUseTicket }: SugarTicketCardProps) {
+export function SugarTicketCard({ currentStreak, logs, onUseTicket, ticketsAvailable, nextTicketIn }: SugarTicketCardProps) {
     const { t } = useLanguage()
     const [isPlanningOpen, setIsPlanningOpen] = useState(false)
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
     const [loading, setLoading] = useState(false)
 
-    // 1. Calculate Phase & Cooldown
-    const { phase, cooldownDays, nextAvailableDate, isLocked, isAvailable, lastTicketDate } = useMemo(() => {
-        // Find last used ticket
-        const ticketLogs = logs.filter(l => l.is_ticket).sort((a, b) => b.date.localeCompare(a.date))
-        const lastTicket = ticketLogs[0]
-        const lastDate = lastTicket ? parseLocalDate(lastTicket.date) : null
+    const isAvailable = ticketsAvailable > 0
+    const isLocked = !isAvailable
 
-        // Determine Phase based on Streak (or maybe total days logic?)
-        // Prompt: "Fase 1: 10 dias consecutivos. Fase 2: Consolidação"
-        // Let's use currentStreak for Phase 1 check.
+    // Cooldown is now fixed 10 days logic from parent
+    const cooldownDays = 10
 
-        let phase = 'Reset'
-        let cooldown = 10
-
-        if (currentStreak < 10 && !lastDate) {
-            // Logic: If never used ticket and streak < 10 -> Locked Phase 1
-            // If used ticket before, we might be in cooldown.
-            phase = 'Reset'
-            cooldown = 10
-        } else {
-            // Phase 2 logic based on frequency
-            phase = 'Consolidation'
-            // Simple logic:
-            // Beginner: < 30 days total history? Or streak?
-            // Let's use Streak for level
-            if (currentStreak < 30) cooldown = 7
-            else if (currentStreak < 90) cooldown = 15
-            else cooldown = 30
-        }
-
-        // Calculate Availability
-        let nextDate = new Date()
-        if (phase === 'Reset') {
-            // Available after day 10.
-            // rough estimation: today + (10 - streak)
-            nextDate = addDays(new Date(), 10 - currentStreak)
-        } else {
-            // Specific cooldown from last usage
-            if (lastDate) {
-                nextDate = addDays(lastDate, cooldown)
-            } else {
-                // First ticket ever (after initial 10 days)
-                nextDate = new Date() // Available now
-            }
-        }
-
-        // Ensure we don't say "Available" if we are in Phase 1 rigid lock
-        if (currentStreak < 10 && !lastDate) {
-            // Overwrite nextDate logic above
-            nextDate = addDays(new Date(), 10 - currentStreak)
-        }
-
-        const today = new Date()
-        today.setHours(0, 0, 0, 0)
-        nextDate.setHours(0, 0, 0, 0)
-
-        const isAvailable = today >= nextDate
-        const daysUntil = differenceInDays(nextDate, today)
-
-        return { phase, cooldownDays: cooldown, nextAvailableDate: nextDate, isLocked: !isAvailable, isAvailable, lastTicketDate: lastDate }
-    }, [currentStreak, logs])
+    // Calculate progress for bar
+    // If next ticket in 3 days, progress is 7/10 = 70%
+    const progress = Math.min(100, Math.max(0, ((10 - nextTicketIn) / 10) * 100))
 
     // Handle Confirm
     const handleConfirm = async () => {
@@ -113,23 +63,29 @@ export function SugarTicketCard({ currentStreak, logs, onUseTicket }: SugarTicke
                         <CardTitle className="text-base">{t('journey.sugar_ticket.title')}</CardTitle>
                         <p className="text-xs text-muted-foreground">
                             {isAvailable
-                                ? t('journey.sugar_ticket.available')
-                                : isLocked && phase === 'Reset'
-                                    ? t('journey.sugar_ticket.locked_phase1')
-                                    : t('journey.sugar_ticket.locked_phase2')}
+                                ? "Available for use"
+                                : "Earned every 10 log days"}
                         </p>
                     </div>
                 </div>
                 {isLocked && (
                     <div className="flex flex-col items-end">
                         <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Locked</span>
-                        <span className="text-sm font-semibold">{differenceInDays(nextAvailableDate, new Date())} {t('journey.next_reward.days_left')}</span>
+                        <span className="text-sm font-semibold">{nextTicketIn} {t('journey.next_reward.days_left')}</span>
                     </div>
                 )}
             </CardHeader>
             <CardContent>
                 {isAvailable ? (
                     <div className="space-y-3">
+                        <div className="flex justify-between items-center bg-amber-100 dark:bg-amber-900/40 p-2 rounded-lg">
+                            <span className="text-sm font-medium text-amber-800 dark:text-amber-200">
+                                Inventory:
+                            </span>
+                            <span className="text-lg font-bold text-amber-600 dark:text-amber-300 flex items-center gap-1">
+                                <Ticket className="w-4 h-4" /> x{ticketsAvailable}
+                            </span>
+                        </div>
                         <p className="text-sm text-amber-800 dark:text-amber-200">
                             {t('journey.sugar_ticket.context_available')}
                         </p>
@@ -141,9 +97,6 @@ export function SugarTicketCard({ currentStreak, logs, onUseTicket }: SugarTicke
                             <Ticket className="h-4 w-4 mr-2" />
                             {t('journey.sugar_ticket.plan_button')}
                         </Button>
-                        <p className="text-xs text-center text-muted-foreground italic">
-                            {t('journey.sugar_ticket.quote_planning')}
-                        </p>
                     </div>
                 ) : (
                     <div className="space-y-3">
@@ -151,12 +104,12 @@ export function SugarTicketCard({ currentStreak, logs, onUseTicket }: SugarTicke
                             {/* Progress bar */}
                             <div
                                 className="h-full bg-gray-400 dark:bg-gray-600 transition-all duration-500"
-                                style={{ width: `${Math.min(100, Math.max(0, 100 - (differenceInDays(nextAvailableDate, new Date()) / cooldownDays * 100)))}%` }}
+                                style={{ width: `${progress}%` }}
                             />
                         </div>
                         <div className="flex justify-between items-center text-xs text-muted-foreground">
-                            <span>{lastTicketDate ? "Ticket used." : "Phase 1"}</span>
-                            <span>Next: {differenceInDays(nextAvailableDate, new Date())} {t('common.days')}</span>
+                            <span>Progress to Next Ticket</span>
+                            <span>{nextTicketIn} days left</span>
                         </div>
                         <p className="text-xs text-center text-muted-foreground italic pt-1">
                             {t('journey.sugar_ticket.quote_control')}
