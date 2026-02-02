@@ -12,7 +12,7 @@ import { Timeline } from '@/components/Timeline'
 import { NextReward } from '@/components/NextReward'
 import { SugarTicketCard } from '@/components/SugarTicketCard'
 import { calculateStreak } from '@/lib/utils'
-import { useMemo, useEffect } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { DebugTrophySeeder } from '@/components/DebugTrophySeeder'
 
@@ -41,6 +41,21 @@ export default function JourneyPage() {
     // Or just modify fetchLogs to grab year-to-date?
 
     const streak = useMemo(() => calculateStreak(logs), [logs])
+
+    // Flexible Mode State
+    const [flexibleMode, setFlexibleMode] = useState(false)
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const stored = localStorage.getItem('sugar-free-flexible-mode')
+            setFlexibleMode(stored === 'true')
+        }
+    }, [])
+
+    const toggleFlexibleMode = (checked: boolean) => {
+        setFlexibleMode(checked)
+        localStorage.setItem('sugar-free-flexible-mode', checked.toString())
+    }
 
 
 
@@ -78,13 +93,18 @@ export default function JourneyPage() {
                 />
             </section>
 
-            {/* Flexible Mode Setting (Mock) */}
-            <section className="bg-card border rounded-xl p-4 flex items-center justify-between">
-                <div className="space-y-0.5">
-                    <Label className="text-base font-semibold">Flexible Mode (Weekly Cheat Day)</Label>
-                    <p className="text-xs text-muted-foreground">Allows 1 cheat day per week without breaking streak.</p>
+            {/* Flexible Mode Setting */}
+            <section className="bg-card/50 backdrop-blur-sm border rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:bg-card/80 transition-colors">
+                <div className="space-y-1">
+                    <Label className="text-lg font-bold">Flexible Mode</Label>
+                    <p className="text-sm text-muted-foreground">Allows 1 cheat day per week without breaking streak.</p>
                 </div>
-                <Switch disabled checked={false} onCheckedChange={() => { }} title="Coming soon with logic" />
+                <div className="flex items-center justify-between">
+                    <span className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded transition-colors ${flexibleMode ? 'bg-green-100 text-green-700' : 'bg-muted text-muted-foreground'}`}>
+                        {flexibleMode ? 'Active' : 'Disabled'}
+                    </span>
+                    <Switch checked={flexibleMode} onCheckedChange={toggleFlexibleMode} />
+                </div>
             </section>
 
             {/* Next Reward */}
