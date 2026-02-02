@@ -12,6 +12,7 @@ export const translations = {
             today: 'Today',
             tomorrow: 'Tomorrow',
             days: 'days',
+            edit: 'Edit',
         },
         landing: {
             hero_title_1: 'Track your sugar-free journey',
@@ -122,6 +123,7 @@ export const translations = {
             today: 'Hoje',
             tomorrow: 'Amanhã',
             days: 'dias',
+            edit: 'Editar',
         },
         landing: {
             hero_title_1: 'Controle seu açúcar.',

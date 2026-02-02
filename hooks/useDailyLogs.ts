@@ -50,7 +50,7 @@ export function useDailyLogs(user_id: string | undefined) {
         setLoading(false)
     }, [user_id])
 
-    const markDay = async (date: Date, success: boolean, note?: string, is_ticket?: boolean) => {
+    const markDay = async (date: Date, success: boolean, note?: string, is_ticket?: boolean, mood?: string, trigger?: string) => {
         if (!user_id) return false
         const dateStr = format(date, 'yyyy-MM-dd')
 
@@ -62,6 +62,8 @@ export function useDailyLogs(user_id: string | undefined) {
                 success,
                 note,
                 is_ticket: is_ticket || false,
+                mood,
+                trigger,
                 updated_at: new Date().toISOString()
             }, { onConflict: 'user_id, date' })
 
@@ -87,6 +89,9 @@ export function useDailyLogs(user_id: string | undefined) {
                     date: dateStr,
                     success,
                     note,
+                    is_ticket,
+                    mood,
+                    trigger,
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 }
