@@ -45,7 +45,23 @@ export const translations = {
             stats: {
                 current_streak: 'Current Streak',
                 month_success: 'Month Success',
+                streak_msg: 'Keep the fire burning!',
+                month_msg: 'Sugar-free days this month',
             },
+
+            action_card: {
+                edit_dialog_title: 'Modify Log',
+                edit_dialog_desc: 'How was your day changed?',
+                change_to_success: 'Change to: Sugar Free',
+                change_to_fail: 'Change to: Had Sugar',
+                flexible_mode: 'Flexible Mode',
+                use_pass: 'Use Flexible Pass',
+                select_emotion: 'How do you feel?',
+                select_trigger: 'What triggered it?',
+                yes_emphatic: 'YES!',
+                restricted: 'RESTRICTED',
+            },
+
         },
         journey: {
             title: 'Your Journey',
@@ -110,6 +126,50 @@ export const translations = {
                 body: 'Consolidated habit',
                 mind: 'Food autonomy'
             }
+        },
+        timeline: {
+            journey_map: 'Journey Map',
+            days_to_quest: 'Days to Quest',
+            body: 'Body',
+            mind: 'Mind',
+        },
+        emotions: {
+            title: 'How are you today?',
+            subtitle: 'Log your mood to understand your victory patterns.',
+            excited: 'Excited',
+            peaceful: 'Peaceful',
+            neutral: 'Neutral',
+            tired: 'Tired',
+        },
+        triggers: {
+            title: 'No stress!',
+            subtitle_1: 'The journey has ups and downs.',
+            subtitle_2: 'What led you to sugar this time?',
+            footer: 'This helps us support you better in the future.',
+            boredom: 'Boredom',
+            stress: 'Stress',
+            social: 'Social',
+            work: 'Work',
+            hunger: 'Hunger',
+            craving: 'Craving',
+        },
+        motivation: {
+            morning: {
+                1: "One good decision can define your day.",
+                2: "You’re starting strong today.",
+            },
+            afternoon: {
+                1: "You’re halfway through the day.",
+                2: "Your body is adjusting.",
+            },
+            evening: {
+                1: "You made it through today.",
+                2: "Another day completed.",
+            },
+            streak: {
+                1: "Still on track today.",
+                2: "Your streak is active.",
+            }
         }
     },
     'pt-br': {
@@ -156,6 +216,20 @@ export const translations = {
             stats: {
                 current_streak: 'Sequência Atual',
                 month_success: 'Sucesso no Mês',
+                streak_msg: 'Mantenha a chama acesa!',
+                month_msg: 'Dias sem açúcar este mês',
+            },
+            action_card: {
+                edit_dialog_title: 'Modificar Registro',
+                edit_dialog_desc: 'Como foi seu dia alterado?',
+                change_to_success: 'Mudar para: Açúcar Zero',
+                change_to_fail: 'Mudar para: Teve Açúcar',
+                flexible_mode: 'Modo Flexível',
+                use_pass: 'Usar Passe Flexível',
+                select_emotion: 'Como você se sente?',
+                select_trigger: 'O que gatilhou isso?',
+                yes_emphatic: 'SIM!',
+                restricted: 'RESTRITO',
             },
         },
         journey: {
@@ -222,6 +296,50 @@ export const translations = {
                 title: 'Novo Padrão',
                 body: 'Hábito consolidado',
                 mind: 'Autonomia alimentar'
+            }
+        },
+        timeline: {
+            journey_map: 'Mapa da Jornada',
+            days_to_quest: 'Dias para a Missão',
+            body: 'Corpo',
+            mind: 'Mente',
+        },
+        emotions: {
+            title: 'Como você está hoje?',
+            subtitle: 'Registre seu humor para entender seus padrões de vitória.',
+            excited: 'Animado',
+            peaceful: 'Em Paz',
+            neutral: 'Neutro',
+            tired: 'Cansado',
+        },
+        triggers: {
+            title: 'Sem estresse!',
+            subtitle_1: 'A jornada é feita de altos e baixos.',
+            subtitle_2: 'O que te levou a consumir açúcar desta vez?',
+            footer: 'Isso nos ajuda a te apoiar melhor no futuro.',
+            boredom: 'Tédio',
+            stress: 'Estresse',
+            social: 'Social',
+            work: 'Trabalho',
+            hunger: 'Fome',
+            craving: 'Vontade',
+        },
+        motivation: {
+            morning: {
+                1: "Uma boa decisão define seu dia.",
+                2: "Você começou forte hoje.",
+            },
+            afternoon: {
+                1: "Metade do dia já foi.",
+                2: "Seu corpo está se ajustando.",
+            },
+            evening: {
+                1: "Você venceu o dia de hoje.",
+                2: "Mais um dia completo.",
+            },
+            streak: {
+                1: "Ainda no caminho certo hoje.",
+                2: "Sua sequência está ativa.",
             }
         }
     }

@@ -231,7 +231,7 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                             {confirmState === 'yes' ? (
                                 <span className="text-[10px] uppercase tracking-tighter leading-none flex flex-col items-center">
                                     <span>{t('home.tap_to_confirm')}</span>
-                                    <span className="text-lg mt-1">SIM!</span>
+                                    <span className="text-lg mt-1">{t('home.action_card.yes_emphatic')}</span>
                                 </span>
                             ) : t('common.yes')}
                         </Button>
@@ -248,7 +248,7 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                             {confirmState === 'no' ? (
                                 <span className="text-[10px] uppercase tracking-tighter leading-none flex flex-col items-center">
                                     <span>{t('home.tap_to_confirm')}</span>
-                                    <span className="text-lg mt-1">RESTRITO</span>
+                                    <span className="text-lg mt-1">{t('home.action_card.restricted')}</span>
                                 </span>
                             ) : t('common.no')}
                         </Button>
@@ -257,7 +257,7 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                     {cheatAvailable && (
                         <div className="text-center mt-4 pt-4 border-t border-dashed animate-in fade-in slide-in-from-bottom-4">
                             <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-3">
-                                ⚖️ {t('journey.flexible_mode')}
+                                ⚖️ {t('home.action_card.flexible_mode')}
                             </p>
                             <Button
                                 variant="outline"
@@ -265,7 +265,7 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                                 onClick={handleCheatUse}
                                 disabled={loading}
                             >
-                                🛡️ Usar Passe Flexible
+                                🛡️ {t('home.action_card.use_pass')}
                             </Button>
                         </div>
                     )}

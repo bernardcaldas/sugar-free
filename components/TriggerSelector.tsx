@@ -20,7 +20,11 @@ const TRIGGERS: { id: TriggerType; label: string; icon: string; color: string }[
     { id: 'craving', label: 'Vontade', icon: '🍪', color: 'bg-amber-100 text-amber-800 border-amber-200 hover:bg-amber-200' },
 ]
 
+import { useLanguage } from '@/contexts/LanguageContext'
+
 export function TriggerSelector({ open, onOpenChange, onSelect }: TriggerSelectorProps) {
+    const { t } = useLanguage()
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-md bg-white dark:bg-zinc-900">
@@ -28,10 +32,10 @@ export function TriggerSelector({ open, onOpenChange, onSelect }: TriggerSelecto
                     <div className="mx-auto bg-green-100 dark:bg-green-900/30 w-12 h-12 rounded-full flex items-center justify-center text-2xl">
                         🤝
                     </div>
-                    <DialogTitle className="text-center text-xl">Sem estresse!</DialogTitle>
+                    <DialogTitle className="text-center text-xl">{t('triggers.title')}</DialogTitle>
                     <DialogDescription className="text-center text-base">
-                        A jornada é feita de altos e baixos.<br />
-                        O que te levou a consumir açúcar desta vez?
+                        {t('triggers.subtitle_1')}<br />
+                        {t('triggers.subtitle_2')}
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 py-4">
@@ -45,15 +49,15 @@ export function TriggerSelector({ open, onOpenChange, onSelect }: TriggerSelecto
                             )}
                             onClick={() => onSelect(item.id)}
                         >
-                            <span className="text-xl" role="img" aria-label={item.label}>
+                            <span className="text-xl" role="img" aria-label={t(`triggers.${item.id}`)}>
                                 {item.icon}
                             </span>
-                            <span className="text-xs font-semibold">{item.label}</span>
+                            <span className="text-xs font-semibold">{t(`triggers.${item.id}`)}</span>
                         </Button>
                     ))}
                 </div>
                 <div className="text-center text-xs text-muted-foreground">
-                    Isso nos ajuda a te apoiar melhor no futuro.
+                    {t('triggers.footer')}
                 </div>
             </DialogContent>
         </Dialog>

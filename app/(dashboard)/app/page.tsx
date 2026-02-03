@@ -43,8 +43,8 @@ export default function DashboardPage() {
     }, [logs, currentMonth])
 
     // Handle Mark
-    const handleMark = async (date: Date, success: boolean, note?: string) => {
-        await markDay(date, success, note)
+    const handleMark = async (date: Date, success: boolean, note?: string, is_ticket?: boolean, mood?: string, trigger?: string) => {
+        await markDay(date, success, note, is_ticket, mood, trigger)
         if (selectedDate) setSelectedDate(null) // Close modal if open
         return true
     }
@@ -108,7 +108,7 @@ export default function DashboardPage() {
                     {selectedDate && (
                         <ActionCard
                             log={selectedLog}
-                            onMark={(s, n) => handleMark(selectedDate, s, n)}
+                            onMark={(s, n, t, m, tr) => handleMark(selectedDate, s, n, t, m, tr)}
                             isFuture={isSameDay(selectedDate, today) ? false : selectedDate > today}
                         />
                     )}

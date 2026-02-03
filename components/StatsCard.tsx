@@ -16,7 +16,7 @@ export function StatsCard({ streak, percentage }: { streak: number, percentage: 
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">{streak}</div>
-                    <p className="text-xs text-muted-foreground">Keep the fire burning!</p>
+                    <p className="text-xs text-muted-foreground">{t('home.stats.streak_msg')}</p>
                 </CardContent>
             </Card>
             <Card>
@@ -26,7 +26,7 @@ export function StatsCard({ streak, percentage }: { streak: number, percentage: 
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">{percentage}%</div>
-                    <p className="text-xs text-muted-foreground">Sugar-free days this month</p>
+                    <p className="text-xs text-muted-foreground">{t('home.stats.month_msg')}</p>
                 </CardContent>
             </Card>
         </div>

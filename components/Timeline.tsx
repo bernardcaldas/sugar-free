@@ -26,13 +26,13 @@ export function Timeline({ currentStreak }: TimelineProps) {
             <div className="flex items-center justify-between px-1">
                 <h2 className="text-xl font-bold flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-primary" />
-                    Journey Map
+                    {t('timeline.journey_map')}
                 </h2>
                 {nextMilestone && (
                     <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
                         <PlayCircle className="w-3.5 h-3.5 text-primary animate-pulse" />
                         <span className="text-xs font-bold text-primary">
-                            {nextMilestone.days - currentStreak} Days to Quest
+                            {nextMilestone.days - currentStreak} {t('timeline.days_to_quest')}
                         </span>
                     </div>
                 )}
@@ -110,14 +110,14 @@ export function Timeline({ currentStreak }: TimelineProps) {
                                                 <div className="flex gap-3 items-start p-2.5 rounded-lg bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/20">
                                                     <Zap className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
                                                     <div>
-                                                        <p className="font-bold text-[10px] text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-0.5">Body</p>
+                                                        <p className="font-bold text-[10px] text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-0.5">{t('timeline.body')}</p>
                                                         <p className="text-xs text-foreground/80 leading-relaxed">{t(`milestones.${milestone.days}.body`)}</p>
                                                     </div>
                                                 </div>
                                                 <div className="flex gap-3 items-start p-2.5 rounded-lg bg-violet-50/50 dark:bg-violet-900/10 border border-violet-100 dark:border-violet-900/20">
                                                     <Brain className="h-4 w-4 text-violet-500 mt-0.5 flex-shrink-0" />
                                                     <div>
-                                                        <p className="font-bold text-[10px] text-violet-600 dark:text-violet-400 uppercase tracking-wider mb-0.5">Mind</p>
+                                                        <p className="font-bold text-[10px] text-violet-600 dark:text-violet-400 uppercase tracking-wider mb-0.5">{t('timeline.mind')}</p>
                                                         <p className="text-xs text-foreground/80 leading-relaxed">{t(`milestones.${milestone.days}.mind`)}</p>
                                                     </div>
                                                 </div>

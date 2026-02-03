@@ -18,14 +18,18 @@ const MOODS: { id: MoodType; label: string; icon: string; color: string }[] = [
     { id: 'tired', label: 'Cansado', icon: '😫', color: 'bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200' },
 ]
 
+import { useLanguage } from '@/contexts/LanguageContext'
+
 export function EmotionSelector({ open, onOpenChange, onSelect }: EmotionSelectorProps) {
+    const { t } = useLanguage()
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle className="text-center text-xl">Como você está hoje?</DialogTitle>
+                    <DialogTitle className="text-center text-xl">{t('emotions.title')}</DialogTitle>
                     <DialogDescription className="text-center">
-                        Registre seu humor para entender seus padrões de vitória.
+                        {t('emotions.subtitle')}
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid grid-cols-2 gap-3 py-4">
@@ -39,10 +43,10 @@ export function EmotionSelector({ open, onOpenChange, onSelect }: EmotionSelecto
                             )}
                             onClick={() => onSelect(mood.id)}
                         >
-                            <span className="text-3xl" role="img" aria-label={mood.label}>
+                            <span className="text-3xl" role="img" aria-label={t(`emotions.${mood.id}`)}>
                                 {mood.icon}
                             </span>
-                            <span className="font-semibold">{mood.label}</span>
+                            <span className="font-semibold">{t(`emotions.${mood.id}`)}</span>
                         </Button>
                     ))}
                 </div>

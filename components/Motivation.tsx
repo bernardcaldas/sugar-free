@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface MotivationProps {
     streakActive: boolean
@@ -10,6 +11,8 @@ interface MotivationProps {
 export function Motivation({ streakActive }: MotivationProps) {
     const [message, setMessage] = useState<string | null>(null)
 
+    const { t } = useLanguage()
+
     useEffect(() => {
         const hour = new Date().getHours()
         let options: string[] = []
@@ -17,24 +20,24 @@ export function Motivation({ streakActive }: MotivationProps) {
         // Time based messages
         if (hour >= 5 && hour < 12) {
             options = [
-                "One good decision can define your day.",
-                "You’re starting strong today."
+                t('motivation.morning.1'),
+                t('motivation.morning.2')
             ]
         } else if (hour >= 12 && hour < 18) {
             options = [
-                "You’re halfway through the day.",
-                "Your body is adjusting."
+                t('motivation.afternoon.1'),
+                t('motivation.afternoon.2')
             ]
         } else {
             options = [
-                "You made it through today.",
-                "Another day completed."
+                t('motivation.evening.1'),
+                t('motivation.evening.2')
             ]
         }
 
         // Context based (on open)
         if (streakActive) {
-            options.push("Still on track today.", "Your streak is active.")
+            options.push(t('motivation.streak.1'), t('motivation.streak.2'))
         }
 
         // Pick one random
@@ -50,7 +53,7 @@ export function Motivation({ streakActive }: MotivationProps) {
         }, 8000)
 
         return () => clearTimeout(timer)
-    }, [streakActive])
+    }, [streakActive, t])
 
     if (!message) return null
 
