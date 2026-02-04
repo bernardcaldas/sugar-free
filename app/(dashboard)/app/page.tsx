@@ -64,7 +64,7 @@ export default function DashboardPage() {
                 <div className="col-span-full lg:col-span-4 space-y-6 min-w-0">
                     {/* Today's Action */}
                     <section className="space-y-6">
-                        <SOSModule onComplete={() => handleMark(new Date(), true, "SOS_COMPLETED")} />
+                        {/* <SOSModule onComplete={() => handleMark(new Date(), true, "SOS_COMPLETED")} /> */}
 
                         <div>
                             <h2 className="text-lg font-semibold mb-2">{t('home.today_title')}</h2>
