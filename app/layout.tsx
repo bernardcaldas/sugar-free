@@ -17,6 +17,10 @@ import { Toaster } from 'react-hot-toast';
 export const metadata: Metadata = {
   title: "Sugar Free",
   description: "Track your sugar-free journey",
+  icons: {
+    icon: "/favicon.svg?v=3",
+    apple: "/favicon.svg?v=3",
+  },
 };
 
 import { ThemeProvider } from '@/components/theme-provider'
