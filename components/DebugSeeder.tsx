@@ -18,15 +18,27 @@ export function DebugSeeder() {
 
         const days = eachDayOfInterval({ start, end })
 
+        const triggers = ['Estresse', 'Social', 'Ansiedade', 'Tédio', 'Cansaço']
+        const moods = ['Motivado', 'Tranquilo', 'Energizado', 'Focado', 'Feliz']
+
         const logsPayload = days.map(day => {
-            // Mock logic: 80% success rate, weekends maybe harder?
-            // Let's make it simple: Random success
-            const isSuccess = Math.random() > 0.2
+            // Realistic pattern: weekends and Friday are riskier
+            const dayOfWeek = day.getDay() // 0=Sun, 5=Fri, 6=Sat
+            let failChance: number
+            if (dayOfWeek === 5) failChance = 0.40             // Friday — "entrada do fim de semana"
+            else if (dayOfWeek === 0 || dayOfWeek === 6) failChance = 0.50 // Weekend
+            else failChance = 0.10                              // Mon-Thu
+
+            const isSuccess = Math.random() > failChance
+            const trigger = !isSuccess ? triggers[Math.floor(Math.random() * triggers.length)] : null
+            const mood = isSuccess ? moods[Math.floor(Math.random() * moods.length)] : null
 
             return {
                 user_id: user.id,
                 date: format(day, 'yyyy-MM-dd'),
                 success: isSuccess,
+                mood,
+                trigger,
                 note: isSuccess ? 'Seeded success' : 'Seeded fail',
                 is_ticket: false,
                 created_at: new Date().toISOString(),

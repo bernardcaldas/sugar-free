@@ -1,8 +1,9 @@
 'use client'
 
+
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Star, Settings } from 'lucide-react'
+import { Home, Star, Settings, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useLanguage } from '@/contexts/LanguageContext'
 
@@ -22,6 +23,12 @@ export function BottomNav() {
             label: t('nav.journey'),
             icon: Star,
             activeMatch: (path: string) => path.startsWith('/app/journey')
+        },
+        {
+            href: '/app/insights',
+            label: t('nav.insights'),
+            icon: Sparkles,
+            activeMatch: (path: string) => path.startsWith('/app/insights')
         },
         {
             href: '/app/settings',

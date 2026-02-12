@@ -29,6 +29,7 @@ export const translations = {
         nav: {
             home: 'Home',
             journey: 'Journey',
+            insights: 'Insights',
             settings: 'Settings',
         },
         header: {
@@ -200,6 +201,7 @@ export const translations = {
         nav: {
             home: 'Início',
             journey: 'Jornada',
+            insights: 'Insights',
             settings: 'Ajustes',
         },
         header: {
