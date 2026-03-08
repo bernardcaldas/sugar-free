@@ -12,6 +12,12 @@
 
 <br />
 
+<div align="center">
+  <img src="./public/tela1-portrait.png" alt="Demonstração do App Sugar-Free rodando no celular" height="500" />
+</div>
+
+<br />
+
 ## ✨ Sobre o Projeto
 
 O **Sugar-Free** é uma aplicação focada em ajudar pessoas a manterem-se alinhadas com seus objetivos e metas. Ele atua como um companheiro digital, projetado para que você não perca de vista o que realmente deseja alcançar.
