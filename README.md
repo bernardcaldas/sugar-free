@@ -36,37 +36,27 @@ A motivação principal foi transformar uma ferramenta validada pela minha rotin
 
 A interface foi cuidadosamente projetada para ser agradável, moderna e livre de distrações, proporcionando uma excelente experiência de uso.
 
-Mas o grande diferencial está no coração do app: o **Modelo de IA**. Ele analisa, sugere e atua lado a lado com você. A Inteligência Artificial serve para **ajudar o usuário a manter a meta**, oferecendo insights no momento certo e ajustando as interações para garantir que o foco permaneça inabalável.
+Mas o grande diferencial está no coração do app: o **Modelo de IA**. Ele analisa, sugere e atua lado a lado com você. A Inteligência Artificial serve para **ajudar o usuário a manter a meta de reduzir o consumo de açúcar** (ou manter um consumo que seja recomendado), oferecendo insights no momento certo e ajustando as interações para garantir que o foco permaneça inabalável.
+
+### ✨ AI Insights (Sua Inteligência Pessoal)
+
+A funcionalidade mais importante do projeto é a nossa tela de **AI Insights**. Essa tela ajuda efetivamente o usuário a focar na sua meta, oferecendo informações detalhadas e amigáveis sobre o progresso.
+
+<div align="center">
+  <img src="./public/sugar free-ai.png" alt="Demonstração da tela de AI Insights" height="500" />
+</div>
+
+
 
 ---
 
-## 🚀 Como Começar
+## 🚀 Como Testar
 
-Siga os passos abaixo para rodar o ambiente de desenvolvimento localmente:
+O projeto já está no ar! Você pode acessá-lo e testar agora mesmo, sem precisar instalar nada localmente.
 
-1. Instale as dependências:
+🔗 **Acesse o deploy na Vercel:** [https://sugar-free-pink.vercel.app/](https://sugar-free-pink.vercel.app/)
 
-```bash
-npm install
-# ou
-yarn install
-# ou
-pnpm install
-```
-
-2. Inicie o servidor:
-
-```bash
-npm run dev
-# ou
-yarn dev
-# ou
-pnpm dev
-# ou
-bun dev
-```
-
-3. Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
+Para começar a usar, basta realizar o cadastro utilizando um **e-mail válido**. Após o login, você terá acesso a todas as funcionalidades do aplicativo, incluindo a tela de insights de IA, para acompanhar sua jornada em direção aos seus objetivos.
 
 ---
 
