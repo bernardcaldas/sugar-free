@@ -43,7 +43,7 @@ Mas o grande diferencial está no coração do app: o **Modelo de IA**. Ele anal
 A funcionalidade mais importante do projeto é a nossa tela de **AI Insights**. Essa tela ajuda efetivamente o usuário a focar na sua meta, oferecendo informações detalhadas e amigáveis sobre o progresso.
 
 <div align="center">
-  <img src="./public/sugar free-ai.png" alt="Demonstração da tela de AI Insights" height="500" />
+  <img src="./public/sugar%20free-ai.png" alt="Demonstração da tela de AI Insights" height="500" />
 </div>
 
 
