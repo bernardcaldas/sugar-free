@@ -212,56 +212,57 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
 
     return (
         <>
-            <Card className="shadow-lg border-2 border-primary/5">
-                <CardHeader>
-                    <CardTitle className="text-center">{t('home.action_card_title')}</CardTitle>
-                </CardHeader>
-                <CardContent className="flex flex-col gap-4 pb-8">
-                    {/* Main Yes/No Buttons */}
+            <div className="py-8">
+                <h2 className="text-center text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8">
+                    {t('home.action_card_title')}
+                </h2>
+                
+                <div className="flex flex-col gap-4 pb-8">
+                    {/* Main Yes/No Buttons — Oversized for mobile */}
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <Button
                             size="lg"
                             className={cn(
-                                "h-20 w-full sm:w-36 text-xl font-bold transition-all duration-300",
-                                confirmState === 'yes' ? "bg-green-700 ring-4 ring-green-400/30 ring-offset-2 scale-105" : "bg-green-600 hover:bg-green-700 shadow-lg shadow-green-500/20"
+                                "h-28 w-full sm:w-48 text-2xl font-bold transition-all duration-300 rounded-2xl",
+                                confirmState === 'yes' ? "bg-primary ring-4 ring-primary/30 ring-offset-4 scale-[1.02]" : "bg-primary hover:bg-primary/90 shadow-2xl shadow-primary/20 text-primary-foreground"
                             )}
                             onClick={() => handleConfirmStep('yes')}
                             disabled={loading || (confirmState === 'no')}
                         >
                             {confirmState === 'yes' ? (
-                                <span className="text-[10px] uppercase tracking-tighter leading-none flex flex-col items-center">
-                                    <span>{t('home.tap_to_confirm')}</span>
-                                    <span className="text-lg mt-1">{t('home.action_card.yes_emphatic')}</span>
+                                <span className="text-xs uppercase tracking-widest leading-none flex flex-col items-center gap-2">
+                                    <span className="opacity-70">{t('home.tap_to_confirm')}</span>
+                                    <span className="text-xl font-black">{t('home.action_card.yes_emphatic')}</span>
                                 </span>
                             ) : t('common.yes')}
                         </Button>
                         <Button
                             size="lg"
-                            variant="destructive"
+                            variant="secondary"
                             className={cn(
-                                "h-20 w-full sm:w-36 text-xl font-bold transition-all duration-300",
-                                confirmState === 'no' ? "bg-red-700 ring-4 ring-red-400/30 ring-offset-2 scale-105" : "shadow-lg shadow-red-500/20"
+                                "h-28 w-full sm:w-48 text-2xl font-bold transition-all duration-300 rounded-2xl",
+                                confirmState === 'no' ? "bg-destructive text-destructive-foreground ring-4 ring-destructive/30 ring-offset-4 scale-[1.02]" : "bg-secondary hover:bg-secondary/80 text-secondary-foreground"
                             )}
                             onClick={() => handleConfirmStep('no')}
                             disabled={loading || (confirmState === 'yes')}
                         >
                             {confirmState === 'no' ? (
-                                <span className="text-[10px] uppercase tracking-tighter leading-none flex flex-col items-center">
-                                    <span>{t('home.tap_to_confirm')}</span>
-                                    <span className="text-lg mt-1">{t('home.action_card.restricted')}</span>
+                                <span className="text-xs uppercase tracking-widest leading-none flex flex-col items-center gap-2">
+                                    <span className="opacity-70">{t('home.tap_to_confirm')}</span>
+                                    <span className="text-xl font-black">{t('home.action_card.restricted')}</span>
                                 </span>
                             ) : t('common.no')}
                         </Button>
                     </div>
 
                     {cheatAvailable && (
-                        <div className="text-center mt-4 pt-4 border-t border-dashed animate-in fade-in slide-in-from-bottom-4">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-3">
+                        <div className="text-center mt-8 pt-6 border-t border-dashed border-border animate-in fade-in slide-in-from-bottom-4">
+                            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4">
                                 ⚖️ {t('home.action_card.flexible_mode')}
                             </p>
                             <Button
                                 variant="outline"
-                                className="w-full sm:w-auto border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800 rounded-xl px-8"
+                                className="w-full sm:w-auto border-border bg-surface-container-low text-foreground hover:bg-surface-container-high rounded-xl h-14 px-8 text-sm font-bold"
                                 onClick={handleCheatUse}
                                 disabled={loading}
                             >
@@ -269,8 +270,8 @@ export function ActionCard({ log, onMark, isFuture }: ActionCardProps) {
                             </Button>
                         </div>
                     )}
-                </CardContent>
-            </Card>
+                </div>
+            </div>
 
             <EmotionSelector
                 open={showEmotionSelector}

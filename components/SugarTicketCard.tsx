@@ -48,20 +48,20 @@ export function SugarTicketCard({ currentStreak, logs, onUseTicket, ticketsAvail
     }
 
     return (
-        <Card className={cn(
-            "border-l-4 transition-all",
+        <div className={cn(
+            "rounded-3xl p-6 transition-all duration-500",
             isAvailable
-                ? "border-l-amber-400 bg-amber-50/50 dark:bg-amber-900/10"
-                : "border-l-gray-300 dark:border-l-gray-700 opacity-90"
+                ? "bg-amber-500/10 dark:bg-amber-900/20"
+                : "bg-surface-container-low"
         )}>
-            <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0">
-                <div className="flex items-center gap-2">
-                    <div className={cn("p-2 rounded-full", isAvailable ? "bg-amber-100 text-amber-600" : "bg-gray-100 text-gray-500")}>
-                        {isAvailable ? <Ticket className="h-5 w-5" /> : <Lock className="h-5 w-5" />}
+            <div className="flex flex-row items-center justify-between mb-6">
+                <div className="flex items-center gap-4">
+                    <div className={cn("flex items-center justify-center h-14 w-14 rounded-2xl", isAvailable ? "bg-amber-500/20 text-amber-600" : "bg-muted text-muted-foreground")}>
+                        {isAvailable ? <Ticket className="h-6 w-6" /> : <Lock className="h-6 w-6" />}
                     </div>
-                    <div>
-                        <CardTitle className="text-base">{t('journey.sugar_ticket.title')}</CardTitle>
-                        <p className="text-xs text-muted-foreground">
+                    <div className="flex flex-col">
+                        <h3 className="text-xl font-black tracking-tight text-foreground">{t('journey.sugar_ticket.title')}</h3>
+                        <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground mt-0.5">
                             {isAvailable
                                 ? "Available for use"
                                 : "Earned every 10 log days"}
@@ -70,53 +70,53 @@ export function SugarTicketCard({ currentStreak, logs, onUseTicket, ticketsAvail
                 </div>
                 {isLocked && (
                     <div className="flex flex-col items-end">
-                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Locked</span>
-                        <span className="text-sm font-semibold">{nextTicketIn} {t('journey.next_reward.days_left')}</span>
+                        <span className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] bg-muted px-2 py-1 rounded-full mb-1">Locked</span>
                     </div>
                 )}
-            </CardHeader>
-            <CardContent>
+            </div>
+
+            <div>
                 {isAvailable ? (
-                    <div className="space-y-3">
-                        <div className="flex justify-between items-center bg-amber-100 dark:bg-amber-900/40 p-2 rounded-lg">
-                            <span className="text-sm font-medium text-amber-800 dark:text-amber-200">
-                                Inventory:
+                    <div className="space-y-6">
+                        <div className="flex justify-between items-center bg-amber-500/10 p-4 rounded-2xl">
+                            <span className="text-xs font-black uppercase tracking-widest text-amber-800 dark:text-amber-200">
+                                Inventory
                             </span>
-                            <span className="text-lg font-bold text-amber-600 dark:text-amber-300 flex items-center gap-1">
-                                <Ticket className="w-4 h-4" /> x{ticketsAvailable}
+                            <span className="text-3xl font-black text-amber-600 dark:text-amber-300 flex items-center gap-2 tracking-tighter">
+                                <Ticket className="w-5 h-5 opacity-50" /> x{ticketsAvailable}
                             </span>
                         </div>
-                        <p className="text-sm text-amber-800 dark:text-amber-200">
+                        <p className="text-sm font-medium text-amber-800 dark:text-amber-200/70">
                             {t('journey.sugar_ticket.context_available')}
                         </p>
                         <Button
-                            size="sm"
-                            className="w-full bg-amber-500 hover:bg-amber-600 text-white font-medium"
+                            size="lg"
+                            className="w-full h-16 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-black text-lg tracking-wide shadow-lg shadow-amber-500/20"
                             onClick={() => setIsPlanningOpen(true)}
                         >
-                            <Ticket className="h-4 w-4 mr-2" />
+                            <Ticket className="h-5 w-5 mr-2" />
                             {t('journey.sugar_ticket.plan_button')}
                         </Button>
                     </div>
                 ) : (
-                    <div className="space-y-3">
-                        <div className="w-full bg-gray-200 dark:bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                    <div className="space-y-6">
+                        <div className="flex flex-col items-center justify-center py-4">
+                           <span className="text-5xl font-black text-foreground tracking-tighter">{10 - nextTicketIn}</span>
+                           <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mt-1">/ 10 Days Progress</span>
+                        </div>
+                        <div className="w-full bg-surface-container-high h-4 rounded-full overflow-hidden p-0.5 shadow-inner">
                             {/* Progress bar */}
                             <div
-                                className="h-full bg-gray-400 dark:bg-gray-600 transition-all duration-500"
+                                className="h-full rounded-full bg-primary transition-all duration-1000 min-w-[5%]"
                                 style={{ width: `${progress}%` }}
                             />
                         </div>
-                        <div className="flex justify-between items-center text-xs text-muted-foreground">
-                            <span>Progress to Next Ticket</span>
-                            <span>{nextTicketIn} days left</span>
-                        </div>
-                        <p className="text-xs text-center text-muted-foreground italic pt-1">
+                        <p className="text-[10px] uppercase tracking-widest font-bold text-center text-muted-foreground pt-2">
                             {t('journey.sugar_ticket.quote_control')}
                         </p>
                     </div>
                 )}
-            </CardContent>
+            </div>
 
             {/* Planning Dialog */}
             <Dialog open={isPlanningOpen} onOpenChange={setIsPlanningOpen}>
@@ -161,6 +161,6 @@ export function SugarTicketCard({ currentStreak, logs, onUseTicket, ticketsAvail
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
-        </Card>
+        </div>
     )
 }

@@ -28,33 +28,38 @@ export function Calendar({ logs, currentDate, onMonthChange, onDayClick }: Calen
     }
 
     return (
-        <div className="bg-white dark:bg-gray-950 rounded-lg border p-4">
-            <div className="flex items-center justify-between mb-4">
-                <h2 className="font-semibold">{format(currentDate, 'MMMM yyyy')}</h2>
-                <div className="flex gap-1">
-                    <Button variant="ghost" size="icon" onClick={() => onMonthChange(subMonths(currentDate, 1))}>
-                        <ChevronLeft className="h-4 w-4" />
+        <div className="py-2">
+            <div className="flex items-center justify-between mb-8 px-2">
+                <h2 className="text-2xl font-serif text-foreground">{format(currentDate, 'MMMM yyyy')}</h2>
+                <div className="flex gap-2">
+                    <Button variant="ghost" size="icon" className="rounded-full bg-surface-container-low hover:bg-surface-container-high" onClick={() => onMonthChange(subMonths(currentDate, 1))}>
+                        <ChevronLeft className="h-5 w-5" />
                     </Button>
-                    <Button variant="ghost" size="icon" onClick={() => onMonthChange(addMonths(currentDate, 1))}>
-                        <ChevronRight className="h-4 w-4" />
+                    <Button variant="ghost" size="icon" className="rounded-full bg-surface-container-low hover:bg-surface-container-high" onClick={() => onMonthChange(addMonths(currentDate, 1))}>
+                        <ChevronRight className="h-5 w-5" />
                     </Button>
                 </div>
             </div>
-            <div className="grid grid-cols-7 gap-1 text-center text-sm mb-2">
-                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => <div key={`${d}-${i}`} className="text-muted-foreground font-medium">{d}</div>)}
+            <div className="grid grid-cols-7 gap-2 text-center text-[10px] uppercase tracking-widest mb-4">
+                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => <div key={`${d}-${i}`} className="text-muted-foreground font-black">{d}</div>)}
             </div>
-            <div className="grid grid-cols-7 gap-1">
+            <div className="grid grid-cols-7 gap-2">
                 {blanks.map((_, i) => <div key={`blank-${i}`} />)}
                 {days.map(day => {
                     const log = getLog(day)
                     const isToday = isSameDay(day, new Date())
-                    let bgClass = "bg-gray-100 dark:bg-gray-800"
+                    
+                    let styleClass = "text-foreground hover:bg-surface-container-lowest"
                     if (log) {
                         if (log.is_ticket) {
-                            bgClass = "bg-amber-100 text-amber-700 border-amber-200"
+                            styleClass = "bg-amber-500/10 text-amber-600 dark:text-amber-500 font-bold"
+                        } else if (log.success) {
+                            styleClass = "bg-primary text-primary-foreground font-bold shadow-md shadow-primary/20"
                         } else {
-                            bgClass = log.success ? "bg-green-100 text-green-700 border-green-200" : "bg-red-100 text-red-700 border-red-200"
+                            styleClass = "bg-destructive/10 text-destructive font-bold" // Flexible pass logic is handled via 'isFlexibleDay' check normally, but generic failure = destructive
                         }
+                    } else if (day > new Date()) {
+                       styleClass = "text-muted-foreground/30 pointer-events-none"
                     }
 
                     return (
@@ -62,10 +67,9 @@ export function Calendar({ logs, currentDate, onMonthChange, onDayClick }: Calen
                             key={day.toISOString()}
                             onClick={() => onDayClick(day)}
                             className={`
-                            h-10 w-full rounded-md flex items-center justify-center text-sm border
-                            ${bgClass}
-                            ${isToday ? "ring-2 ring-primary ring-offset-2" : ""}
-                            hover:opacity-80 transition-opacity
+                            h-14 w-full rounded-2xl flex items-center justify-center text-sm transition-all
+                            ${styleClass}
+                            ${isToday && !log ? "ring-2 ring-primary/30 ring-offset-2" : ""}
                         `}
                         >
                             {format(day, 'd')}

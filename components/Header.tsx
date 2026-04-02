@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { format } from 'date-fns'
-import { Settings, LogOut, User as UserIcon, Sun, Moon, Flame } from 'lucide-react'
+import { LogOut, Sun, Moon, Flame } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
@@ -19,7 +19,6 @@ export function Header() {
     const { theme, setTheme } = useTheme()
     const { language, setLanguage } = useLanguage()
 
-    // Fetch logs for Vitality display
     const { logs, fetchLogs } = useDailyLogs(user?.id)
 
     useEffect(() => {
@@ -27,8 +26,6 @@ export function Header() {
     }, [user, fetchLogs])
 
     const streak = useMemo(() => calculateStreak(logs), [logs])
-
-    // Hydration mismatch might occur if using new Date() directly during server/client diff.
     const today = format(new Date(), 'EEEE, MMMM do')
 
     const handleLogout = async () => {
@@ -39,50 +36,52 @@ export function Header() {
     const userInitial = user?.email ? user.email[0].toUpperCase() : '?'
 
     return (
-        <header className="flex h-16 items-center justify-between border-b px-6 bg-white dark:bg-gray-950">
+        <header className="flex h-14 items-center justify-between border-b border-border px-6 bg-background">
             <div className="flex flex-col">
                 <Link href="/app">
-                    <h1 className="text-lg font-bold">Sugar Free</h1>
+                    <span className="text-sm font-semibold tracking-tight text-foreground">Sugar Free</span>
                 </Link>
-                <p className="text-xs text-muted-foreground" suppressHydrationWarning>{today}</p>
+                <p className="text-[11px] text-muted-foreground" suppressHydrationWarning>{today}</p>
             </div>
-            <div className="flex items-center gap-2">
-                <div className="flex items-center gap-3 mr-2">
-                    {/* Vitality Fire Icon */}
-                    <div className="flex items-center gap-1 bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 px-3 py-1.5 rounded-full font-bold animate-fade-in">
-                        <Flame className="w-5 h-5 fill-current animate-pulse" />
-                        <span>{streak}</span>
-                    </div>
 
-                    {user && (
-                        <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary text-sm font-semibold" title={user.email}>
-                            {userInitial}
-                        </div>
-                    )}
+            <div className="flex items-center gap-1.5">
+                {/* Streak badge — clean slate */}
+                <div className="flex items-center gap-1.5 bg-primary/10 text-primary px-2.5 py-1 rounded-md text-sm font-semibold">
+                    <Flame className="w-3.5 h-3.5" />
+                    <span>{streak}</span>
                 </div>
 
-                {/* Language Toggle */}
+                {user && (
+                    <div
+                        className="flex items-center justify-center h-7 w-7 rounded-full border border-border bg-secondary text-foreground text-xs font-semibold"
+                        title={user.email}
+                    >
+                        {userInitial}
+                    </div>
+                )}
+
                 <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => setLanguage(language === 'en' ? 'pt-br' : 'en')}
                     title="Switch Language"
+                    className="h-8 w-8"
                 >
-                    <span className="text-xs font-bold">{language?.toUpperCase()}</span>
+                    <span className="text-[10px] font-bold">{language?.toUpperCase()}</span>
                 </Button>
 
-                {/* Theme Toggle */}
                 <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                     title="Toggle Theme"
+                    className="h-8 w-8"
                 >
-                    {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                    {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
                 </Button>
 
-                <Button variant="ghost" size="icon" onClick={handleLogout}>
-                    <LogOut className="h-5 w-5" />
+                <Button variant="ghost" size="icon" onClick={handleLogout} className="h-8 w-8">
+                    <LogOut className="h-4 w-4" />
                 </Button>
             </div>
         </header>

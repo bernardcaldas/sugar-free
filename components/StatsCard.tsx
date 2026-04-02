@@ -1,34 +1,34 @@
 'use client'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Flame, CheckCircle } from 'lucide-react'
+import { CardContent } from '@/components/ui/card'
+import { CheckCircle2 } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 export function StatsCard({ streak, percentage }: { streak: number, percentage: number }) {
     const { t } = useLanguage()
 
     return (
-        <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">{t('home.stats.current_streak')}</CardTitle>
-                    <Flame className="h-4 w-4 text-orange-500" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">{streak}</div>
-                    <p className="text-xs text-muted-foreground">{t('home.stats.streak_msg')}</p>
-                </CardContent>
-            </Card>
-            <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">{t('home.stats.month_success')}</CardTitle>
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">{percentage}%</div>
-                    <p className="text-xs text-muted-foreground">{t('home.stats.month_msg')}</p>
-                </CardContent>
-            </Card>
+        <div className="flex flex-col items-center justify-center py-8">
+            {/* Massive Typography Streak */}
+            <div className="text-center space-y-1">
+                <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
+                    {t('home.stats.current_streak')}
+                </p>
+                <div className="text-[5rem] leading-none font-bold tracking-tighter text-primary">
+                    {streak}
+                </div>
+                <p className="text-sm font-medium text-foreground">
+                    {t('home.stats.streak_msg')}
+                </p>
+            </div>
+
+            {/* Subtle Progress Pill */}
+            <div className="mt-8 inline-flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full">
+                <CheckCircle2 className="w-4 h-4 text-primary" />
+                <span className="text-sm font-semibold tracking-tight">
+                    {percentage}% <span className="font-normal text-muted-foreground">{t('home.stats.month_msg')}</span>
+                </span>
+            </div>
         </div>
     )
 }

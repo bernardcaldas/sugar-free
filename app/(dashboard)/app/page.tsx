@@ -56,37 +56,32 @@ export default function DashboardPage() {
     }, [logs, selectedDate])
 
     return (
-        <div className="space-y-6 pb-10">
+        <div className="space-y-12 pb-24 pt-4 px-2 sm:px-4">
             <MonthlyRecap userId={user?.id} />
             {process.env.NODE_ENV === 'development' && <DebugSeeder />}
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-                <div className="col-span-full lg:col-span-4 space-y-6 min-w-0">
-                    {/* Today's Action */}
-                    <section className="space-y-6">
-                        {/* <SOSModule onComplete={() => handleMark(new Date(), true, "SOS_COMPLETED")} /> */}
-
-                        <div>
-                            <h2 className="text-lg font-semibold mb-2">{t('home.today_title')}</h2>
-                            <ActionCard
-                                log={todayLog}
-                                onMark={(s, n) => handleMark(today, s, n)}
-                                isFuture={false}
-                            />
-                            <Motivation streakActive={streak > 0} />
-                        </div>
-                    </section>
-
-                    {/* Stats */}
+            <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-7">
+                <div className="col-span-full lg:col-span-4 space-y-12 min-w-0">
+                    
+                    {/* Stats Prominently Displayed first on mobile flow for dopamine */}
                     <section>
                         <StatsCard streak={streak} percentage={monthPercentage} />
+                    </section>
+
+                    {/* Today's Action */}
+                    <section className="space-y-8">
+                        <ActionCard
+                            log={todayLog}
+                            onMark={(s, n) => handleMark(today, s, n)}
+                            isFuture={false}
+                        />
+                        <Motivation streakActive={streak > 0} />
                     </section>
                 </div>
 
                 <div className="col-span-full lg:col-span-3">
                     {/* Calendar */}
                     <section>
-                        <h2 className="text-lg font-semibold mb-2">{t('home.history_title')}</h2>
                         <Calendar
                             logs={logs}
                             currentDate={currentMonth}
@@ -99,18 +94,20 @@ export default function DashboardPage() {
 
             {/* Edit Modal for History */}
             <Dialog open={!!selectedDate} onOpenChange={(open) => !open && setSelectedDate(null)}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>
+                <DialogContent className="sm:max-w-md rounded-3xl p-0 overflow-hidden">
+                    <DialogHeader className="p-6 pb-0">
+                        <DialogTitle className="text-center font-serif text-2xl">
                             {selectedDate ? format(selectedDate, 'MMMM do, yyyy') : 'Edit Day'}
                         </DialogTitle>
                     </DialogHeader>
                     {selectedDate && (
+                        <div className="p-2">
                         <ActionCard
                             log={selectedLog}
                             onMark={(s, n, t, m, tr) => handleMark(selectedDate, s, n, t, m, tr)}
                             isFuture={isSameDay(selectedDate, today) ? false : selectedDate > today}
                         />
+                        </div>
                     )}
                 </DialogContent>
             </Dialog>

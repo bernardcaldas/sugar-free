@@ -58,33 +58,36 @@ export function NextReward({ currentStreak }: NextRewardProps) {
     const progressPercent = Math.min(100, (currentStreak / nextMilestone.days) * 100)
 
     return (
-        <div className="mb-6">
-            <h2 className="text-lg font-semibold mb-2">{t('journey.next_reward.title')}</h2>
-            <Card>
-                <CardContent className="p-4 space-y-3">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <h3 className="font-semibold text-primary">
-                                {t(`milestones.${nextMilestone.days}.body`)}
-                            </h3>
-                            <p className="text-sm text-muted-foreground">
-                                {t(`milestones.${nextMilestone.days}.title`)}
-                            </p>
-                        </div>
-                        <span className="text-sm font-semibold text-muted-foreground">
-                            ({nextMilestone.days} {t('common.days')})
-                        </span>
+        <div className="mb-6 space-y-4">
+            <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground ml-2">{t('journey.next_reward.title')}</h2>
+            <div className="bg-surface-container-low rounded-[2rem] p-6 sm:p-8 space-y-6">
+                <div className="flex justify-between items-start">
+                    <div className="flex flex-col">
+                        <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary">{t(`milestones.${nextMilestone.days}.title`)}</p>
+                        <h3 className="text-2xl font-black text-foreground tracking-tight mt-1 leading-tight">
+                            {t(`milestones.${nextMilestone.days}.body`)}
+                        </h3>
                     </div>
+                </div>
 
-                    <div className="space-y-1">
-                        <Progress value={progressPercent} className="h-2" />
-                        <div className="flex justify-between text-xs text-muted-foreground">
-                            <span>{currentStreak} {t('common.days')}</span>
-                            <span>{nextMilestone.days - currentStreak} {t('journey.next_reward.days_left')}</span>
-                        </div>
+                <div className="space-y-3">
+                    <div className="flex items-baseline justify-between">
+                        <span className="text-4xl font-black tracking-tighter text-foreground">{currentStreak}</span>
+                        <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground">/ {nextMilestone.days} {t('common.days')}</span>
                     </div>
-                </CardContent>
-            </Card>
+                    
+                    <div className="w-full bg-surface-container-high h-4 rounded-full overflow-hidden p-0.5 shadow-inner">
+                        <div
+                            className="h-full rounded-full bg-primary transition-all duration-1000 min-w-[5%]"
+                            style={{ width: `${progressPercent}%` }}
+                        />
+                    </div>
+                    <div className="flex justify-between text-[10px] uppercase tracking-widest font-black text-muted-foreground pt-1">
+                        <span>Current</span>
+                        <span>{nextMilestone.days - currentStreak} {t('journey.next_reward.days_left')}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

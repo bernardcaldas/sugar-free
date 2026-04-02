@@ -18,8 +18,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     if (loading) {
         return (
-            <div className="flex h-screen items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <div className="flex h-screen items-center justify-center bg-background">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
             </div>
         )
     }
@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     if (!user) return null
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
+        <div className="min-h-screen flex flex-col bg-background">
             <Header />
             <main className="flex-1 p-4 md:p-6 container mx-auto max-w-4xl pb-24">
                 {children}

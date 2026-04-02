@@ -60,11 +60,11 @@ export default function JourneyPage() {
 
 
     return (
-        <div className="space-y-6 pb-10">
+        <div className="space-y-12 pb-24 pt-4 px-2 sm:px-4">
             {process.env.NODE_ENV === 'development' && <DebugTrophySeeder />}
-            <div>
-                <h1 className="text-2xl font-bold mb-2">{t('journey.title')}</h1>
-                <p className="text-muted-foreground">{t('journey.subtitle')}</p>
+            <div className="text-center md:text-left px-2">
+                <h1 className="text-4xl font-serif font-black tracking-tight text-foreground mb-3">{t('journey.title')}</h1>
+                <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">{t('journey.subtitle')}</p>
             </div>
 
             {/* XP Section */}
@@ -94,16 +94,16 @@ export default function JourneyPage() {
             </section>
 
             {/* Flexible Mode Setting */}
-            <section className="bg-card/50 backdrop-blur-sm border rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:bg-card/80 transition-colors">
-                <div className="space-y-1">
-                    <Label className="text-lg font-bold">Flexible Mode</Label>
-                    <p className="text-sm text-muted-foreground">Allows 1 cheat day per week without breaking streak.</p>
-                </div>
-                <div className="flex items-center justify-between">
-                    <span className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded transition-colors ${flexibleMode ? 'bg-green-100 text-green-700' : 'bg-muted text-muted-foreground'}`}>
+            <section className="bg-surface-container-low text-foreground rounded-3xl p-6 md:p-8 flex items-center justify-between shadow-lg shadow-black/5">
+                <div className="space-y-1 pr-4">
+                    <Label className="text-lg font-black">Flexible Mode</Label>
+                    <p className="text-xs text-muted-foreground font-medium">Allows 1 cheat day per week without breaking streak.</p>
+                    <span className={`inline-block mt-2 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full transition-colors ${flexibleMode ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground'}`}>
                         {flexibleMode ? 'Active' : 'Disabled'}
                     </span>
-                    <Switch checked={flexibleMode} onCheckedChange={toggleFlexibleMode} />
+                </div>
+                <div>
+                    <Switch checked={flexibleMode} onCheckedChange={toggleFlexibleMode} className="scale-125" />
                 </div>
             </section>
 
