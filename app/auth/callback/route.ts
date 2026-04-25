@@ -1,11 +1,13 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
     const { searchParams, origin } = new URL(request.url)
     const code = searchParams.get('code')
-    const next = searchParams.get('next') ?? '/app'
+    const rawNext = searchParams.get('next') ?? '/app'
+    const ALLOWED_REDIRECTS = ['/app', '/app/insights', '/app/stats', '/app/settings', '/app/history']
+    const next = ALLOWED_REDIRECTS.includes(rawNext) ? rawNext : '/app'
 
     if (code) {
         const cookieStore = await cookies()

@@ -54,16 +54,18 @@ export function useDailyLogs(user_id: string | undefined) {
         if (!user_id) return false
         const dateStr = format(date, 'yyyy-MM-dd')
 
+        const clamp = (s?: string, max = 200) => s?.trim().slice(0, max) || undefined
+
         const { error } = await supabase
             .from('daily_logs')
             .upsert({
                 user_id,
                 date: dateStr,
                 success,
-                note,
+                note: clamp(note, 500),
                 is_ticket: is_ticket || false,
-                mood,
-                trigger,
+                mood: clamp(mood),
+                trigger: clamp(trigger),
                 updated_at: new Date().toISOString()
             }, { onConflict: 'user_id, date' })
 

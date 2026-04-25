@@ -45,8 +45,6 @@ export default function InsightsPage() {
         try {
             const res = await fetch("/api/insights", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId: user.id }),
             });
 
             if (!res.ok) throw new Error("Failed to fetch insights");
